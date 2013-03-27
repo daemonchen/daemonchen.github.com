@@ -10,8 +10,9 @@ layout: default
         {% for post in site.posts %}
 
           <li>
-            <a href="{{ site.baseurl }}{{ post.url }}#disqus_thread">{{ post.title }}</a>
-            {{ post.date | date_to_string }} 
+          	<a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+            <a style="float:right;" href="{{ site.baseurl }}{{ post.url }}#disqus_thread">0</a>
+            <a style="float:right; padding-right:20px;" href="{{ site.baseurl }}{{ post.url }}">{{ post.date | date_to_string }} </a>
           </li>
 
         {% endfor %}
