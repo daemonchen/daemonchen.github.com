@@ -3,18 +3,20 @@ layout: default
 ---
 
 
-<p>最新文章</p>
 
 <ul>
 
-        {% for post in site.posts %}
-
-          <li>
-          	<a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
-            <a style="float:right;" href="{{ site.baseurl }}{{ post.url }}#disqus_thread"></a>
-            <a style="float:right; padding-right:20px;" href="{{ site.baseurl }}{{ post.url }}">{{ post.date | date_to_string }} </a>
-          </li>
-
+        {% for post in site.posts %}        
+	        <div class="span4">
+	          <h3>
+	          	<a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a>
+	          </h3>
+	          <p>
+	          	{{ post.date | date_to_string }} 
+	          	<a style="float:right;" href="{{ site.baseurl }}{{ post.url }}#disqus_thread"></a>
+	          </p>
+	          <p>{{ post.brief }}</p>
+	        </div>
         {% endfor %}
 
 </ul>
