@@ -1,0 +1,78 @@
+---
+layout: detail
+title: sencha源码解读——config
+brief: 在sencha的官方解释里，config就是List of configuration options with their default values（带有默认值的配置列表）。一般来说我们可以通过get和set来获取和修改config的参数。但是有一点需要注意：。
+
+---
+<h1>{{ page.title }}</h1>
+<h3>{{ page.date | date_to_string }}</h3>
+<p>
+  在sencha的官方解释里，config就是List of configuration options with their default values（带有默认值的配置列表）。
+</p>
+<p>
+  一般来说我们可以通过get和set来获取和修改config的参数。但是有一点需要注意：
+</p>
+<p class="muted">
+  **Note** You need to make sure {@link Ext.Base#initConfig} is called from your constructor if you are defining</br>
+* your own class or singleton, unless you are extending a Component. Otherwise the generated getter and setter</br>
+* methods will not be initialized.
+</p>
+<p>
+  上面是摘自sencha源码里的注释，大致意思就是：
+</p>
+<p class="muted">
+  如果我们自定义了一个class或者一个单例，而这个class不是继承自sencha组件，那我们需要在构造函数（constructor）里调用initConfig方法，否则，getter和setter方法不会被初始化。</br>
+示例如下：
+</p>
+<pre>
+  Ext.define('My.sample.Person', {
+    config: {
+        name: 'Mr. Unknown',
+        age: 0,
+        gender: 'Male'
+    },
+
+    constructor: function(config) {
+        this.initConfig(config);
+
+        return this;
+    }
+
+    // ...
+  });
+
+  var jacky = new Person({
+    name: "Jacky",
+    age: 35
+  });
+
+  alert(jacky.getAge());      // alerts 35
+</pre>
+<p>
+除了get和set方法，sencha还提供了apply和update两个模板方法。
+这两个方法分别会在set之前和set之后执行。
+我们可以在这里面做一些自己的逻辑，比如验证神马的。
+</p>
+<pre>
+  Ext.define('My.sample.Person', {
+    config: { .... },
+
+    constructor: { .... }
+
+    applyAge: function(age) {
+        if (typeof age != 'number' || age &lt; 0) {
+            console.warn("Invalid age, must be a positive number");
+            return;
+        }
+
+        return age;
+    },
+
+    updateAge: function(newAge, oldAge) {
+        // age has changed from "oldAge" to "newAge"
+        this.fireEvent('agechange', this, newAge, oldAge);
+    }
+
+    // ....
+  });
+</pre>

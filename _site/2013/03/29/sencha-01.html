@@ -72,42 +72,78 @@
 
     <div class="container">      
       <div>
-        <p>
-	<a href="http://style.qq.com/wallpaper/bigshow.html?id=4665&iscal=true&width=800&height=600&type=static">
-		<img src="/images/1280_800_4665.jpg">
-	</a>
-</p>
-<h1>毕业季</h1>
+        <h1>sencha源码解读——config</h1>
+<h3>29 Mar 2013</h3>
 <p>
-演唱：<a href="http://639250.5sing.com/">姚煜</a>
-作词：张玉虎、姚煜
-作曲：姚煜
-编曲：姚煜
-混缩：姚煜
-分类：民谣   
-专辑：单曲</p>
-<a href="http://yc.5sing.com/1177381.html#726724-tsina-1-13911-1eef93c5e7831dc7a651096d6e0a7837">想听么，狠狠点击这里</a>
-<h3>歌词</h3>
+  在sencha的官方解释里，config就是List of configuration options with their default values（带有默认值的配置列表）。
+</p>
+<p>
+  一般来说我们可以通过get和set来获取和修改config的参数。但是有一点需要注意：
+</p>
+<p class="muted">
+  **Note** You need to make sure {@link Ext.Base#initConfig} is called from your constructor if you are defining</br>
+* your own class or singleton, unless you are extending a Component. Otherwise the generated getter and setter</br>
+* methods will not be initialized.
+</p>
+<p>
+  上面是摘自sencha源码里的注释，大致意思就是：
+</p>
+<p class="muted">
+  如果我们自定义了一个class或者一个单例，而这个class不是继承自sencha组件，那我们需要在构造函数（constructor）里调用initConfig方法，否则，getter和setter方法不会被初始化。</br>
+示例如下：
+</p>
+<pre>
+  Ext.define('My.sample.Person', {
+    config: {
+        name: 'Mr. Unknown',
+        age: 0,
+        gender: 'Male'
+    },
 
-	<p>当清晨第一缕阳光，洒向古老的礼堂。</br>
-花园里总有种声音，弥漫在耳旁。</br>
-走过熟悉的博雅路，感受到每个人的梦想。</br>
-花开花落，人来人往。这里总能有让你驻足的地方。</br>
-</p>
+    constructor: function(config) {
+        this.initConfig(config);
+
+        return this;
+    }
+
+    // ...
+  });
+
+  var jacky = new Person({
+    name: "Jacky",
+    age: 35
+  });
+
+  alert(jacky.getAge());      // alerts 35
+</pre>
 <p>
-留在黑板的字舍不得擦，那就印在回忆里吧。</br>
-好让我们的记忆放个假，准备好行装再出发。</br>
-关于昨天的事还放不下，记住所有祝福的话。</br>让它陪你过每一个春秋冬夏，请你一定要珍重啊，珍重啊。</br>
+除了get和set方法，sencha还提供了apply和update两个模板方法。
+这两个方法分别会在set之前和set之后执行。
+我们可以在这里面做一些自己的逻辑，比如验证神马的。
 </p>
-<p>
-走出仁和经过操场。穿过斑驳的城墙。</br>
-在铁塔公园的湖边，还留着岁月的模样。</br>
-梧桐树隙里的霞光，映衬所有人笑得脸庞。</br>
-欢歌笑语，熙熙攘攘，我们一起写下，这短短四年的荣光。</br>
-</p>
-<p>
-留在黑板的字舍不得擦，那就印在回忆里吧。</br>好让我们的记忆放个假，准备好行装再出发。</br>
-关于昨天的事还放不下，记住所有祝福的话。</br>让它陪你过每一个春秋冬夏，请你一定要珍重啊，珍重啊。</p>
+<pre>
+  Ext.define('My.sample.Person', {
+    config: { .... },
+
+    constructor: { .... }
+
+    applyAge: function(age) {
+        if (typeof age != 'number' || age &lt; 0) {
+            console.warn("Invalid age, must be a positive number");
+            return;
+        }
+
+        return age;
+    },
+
+    updateAge: function(newAge, oldAge) {
+        // age has changed from "oldAge" to "newAge"
+        this.fireEvent('agechange', this, newAge, oldAge);
+    }
+
+    // ....
+  });
+</pre>
       </div>
       <div id="disqus_thread"></div>
       <hr>
