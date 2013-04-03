@@ -1,0 +1,89 @@
+---
+layout: detail
+title: ruby学习笔记（一）
+brief: 刚刚开始接触ruby，看了官方的一些文档。做些摘抄。以增加记忆效果。人比较笨。哎，年纪大咯。本章主要是一个基础代码片段和文件路径
+---
+
+<h1>{{ page.title }}</h1>
+<h3>{{ page.date | date_to_string }}</h3>
+<blockquote>
+获得当前执行文件的文件名：
+
+<pre>__FILE__</pre>
+
+获得当前文件的目录
+
+<pre>File.dirname(__FILE__)</pre>
+
+获得当前执行文件的完整路径
+
+<pre>require ‘pathname’
+Pathname.new(__FILE__).realpath</pre>
+
+获得当前执行文件的目录完整路径
+
+<pre>require ‘pathname’
+Pathname.new(File.dirname(__FILE__)).realpath
+</pre>
+
+<p>$0: $0是整个ruby执行文件最顶层文件的路径。因此使用if __FILE__==$0可以判断当前ruby文件是被引用还是被执行。
+</p>
+
+下面是官方文档给的入门demo，可以直接运行的
+<pre>
+class MegaGreeter
+	attr_accessor :names
+	def initialize(names = "World")
+		@names = names
+	end
+
+	def say_hi
+		if @names.nil?
+			puts "..."
+		elsif @names.respond_to?("each")
+			@names.each do |name|
+				puts "Hello #{name}"
+			end
+		else
+			puts "Hello #{@names}"
+		end
+	end
+
+	def say_bye
+    if @names.nil?
+      puts "..."
+    elsif @names.respond_to?("join")
+      # Join the list elements with commas
+      puts "Goodbye #{@names.join(", ")}.  Come back soon!"
+    else
+      puts "Goodbye #{@names}.  Come back soon!"
+    end
+  end
+
+end
+
+if __FILE__ == $0
+	puts File.dirname(__FILE__)
+	puts $0
+  mg = MegaGreeter.new
+  mg.say_hi
+  mg.say_bye
+
+  # Change name to be "Zeke"
+  mg.names = "Zeke"
+  mg.say_hi
+  mg.say_bye
+
+  # Change the name to an array of names
+  mg.names = ["Albert", "Brenda", "Charles",
+    "Dave", "Englebert"]
+  mg.say_hi
+  mg.say_bye
+
+  # Change to nil
+  mg.names = nil
+  mg.say_hi
+  mg.say_bye
+end
+</pre>
+</blockquote>
