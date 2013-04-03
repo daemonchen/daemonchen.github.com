@@ -1,18 +1,193 @@
----
-layout: default
----
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu_union_verify" content="4c2699c961836335046b34d583e2f1e8">
+  <meta name="baidu-site-verification" content="W5ActQDR7D07HRCs" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
+  <link href="stylesheets/bootstrap.css" rel="stylesheet">
+  <style type="text/css">
+    body {
+      padding-top: 60px;
+      padding-bottom: 40px;
+    }
+  </style>
+  <link href="stylesheets/bootstrap-responsive.css" rel="stylesheet">
 
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+    <script src="../assets/js/html5shiv.js"></script>
+  <![endif]-->
 
-        {% for post in site.posts %}        
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  
+  <link rel="apple-touch-icon" sizes="57x57" href="https://github.com/apple-touch-icon-114.png" />
+  <link rel="apple-touch-icon" sizes="114x114" href="https://github.com/apple-touch-icon-114.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="https://github.com/apple-touch-icon-144.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="https://github.com/apple-touch-icon-144.png" />
+  <link rel="icon" type="image/x-icon" href="https://github.com/favicon.ico" />
+  <title>Classical1988</title>
+  <meta name="description" content="my blog">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+</head>
+
+<body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li class="divider"></li>
+                  <li class="nav-header">Nav header</li>
+                  <li><a href="#">Separated link</a></li>
+                  <li><a href="#">One more separated link</a></li>
+                </ul>
+              </li>
+            </ul>
+            
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <!-- Main hero unit for a primary marketing message or call to action -->
+      <div class="hero-unit">
+        <h1>做个知行合一的前端开发</h1>
+        <p>
+          <ul>
+            <li>以动手实践为荣 , 以只看不练为耻;</li>
+            <li>以打印日志为荣 , 以单步跟踪为耻;</li>
+            <li>以空格缩进为荣 , 以制表缩进为耻;</li>
+            <li>以单元测试为荣 , 以人工测试为耻;
+              <ul>
+                <li>UnitTest很不错</li>
+                <li>Nose也很好用</li>
+                <li>配合Profile很爽</li>
+                <li>配合pdb也不错</li>
+              </ul>
+            </li>
+            <li>以模块复用为荣 , 以复制粘贴为耻;</li>
+            <li>以多态应用为荣 , 以分支判断为耻;</li>
+            <li>以Pythonic为荣 , 以冗余拖沓为耻;</li>
+            <li>以总结分享为荣 , 以跪求其解为耻;</li>
+          </ul>       
+          </p>
+        <p><a href="https://github.com/daemonchen/daemonchen.github.com" class="btn btn-primary btn-large">Follow me &raquo;</a></p>
+      </div>
+
+      <!-- Example row of columns -->
+      <div class="row">
+                        
 	        <div class="span4">
 	          <h3>
-	          	<a href="{{ site.baseurl }}{{ post.url }}">{{ post.title | truncate: 16 }}</a>
+	          	<a href="/2013/03/29/sencha-01.html">sencha源码解读——c...</a>
 	          </h3>
 	          <p>
-	          	{{ post.date | date_to_string}} 
-	          	<a style="float:right;" href="{{ site.baseurl }}{{ post.url }}#disqus_thread"></a>
+	          	29 Mar 2013 
+	          	<a style="float:right;" href="/2013/03/29/sencha-01.html#disqus_thread"></a>
 	          </p>
-	          <p>{{ post.brief | truncate: 100 }}</p>
+	          <p>在sencha的官方解释里，config就是List of configuration options with their default values（带有默认值的配置列表）。一般来说我们可...</p>
 	        </div>
-        {% endfor %}
+                
+	        <div class="span4">
+	          <h3>
+	          	<a href="/2013/03/27/biyeji.html">毕业季</a>
+	          </h3>
+	          <p>
+	          	27 Mar 2013 
+	          	<a style="float:right;" href="/2013/03/27/biyeji.html#disqus_thread"></a>
+	          </p>
+	          <p>当清晨第一缕阳光，洒向古老的礼堂。花园里总有种声音，弥漫在耳旁。走过熟悉的博雅路，感受到每个人的梦想。花开花落，人来人往。这里总能有让你驻足的地方。</p>
+	        </div>
+                
+	        <div class="span4">
+	          <h3>
+	          	<a href="/2013/03/20/coffee.html">细数coffee中那些可口...</a>
+	          </h3>
+	          <p>
+	          	20 Mar 2013 
+	          	<a style="float:right;" href="/2013/03/20/coffee.html#disqus_thread"></a>
+	          </p>
+	          <p>最近用coffee来做项目，使用第一天，就爱上了这种优雅的编程风格。来总结一下在项目中使用过的语法糖。</p>
+	        </div>
+                
+	        <div class="span4">
+	          <h3>
+	          	<a href="/2013/01/08/journel.html">时间不知不觉，而我们后知后觉</a>
+	          </h3>
+	          <p>
+	          	08 Jan 2013 
+	          	<a style="float:right;" href="/2013/01/08/journel.html#disqus_thread"></a>
+	          </p>
+	          <p>时间如白驹过隙，不知不觉间，我便晃过了我的第25个生日。回首来上海的两年，匆匆忙忙，收获了一些，也洒落了一些。也不知是悲是喜。</p>
+	        </div>
+        
+
+      </div>
+
+      <hr>
+
+      <footer class="navbar">
+        <ul class="nav">
+          <li>
+              <a  href="https://github.com/daemonchen" class=""><img src="https://secure.gravatar.com/avatar/b296cd51fec6c36a6cd0d590ba3446ac?s=30&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="48" height="48" class="img-polaroid"/></a>
+          </li>
+          <li>
+            <a style="line-height:55px;" href="https://github.com/daemonchen">快乐前行 低迷折回</a>
+          </li>
+        </ul>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+  <!--
+    <script src="javascripts/bootstrap-transition.js"></script>
+    <script src="javascripts/bootstrap-alert.js"></script>
+    <script src="javascripts/bootstrap-modal.js"></script>
+    
+    <script src="javascripts/bootstrap-scrollspy.js"></script>
+    <script src="javascripts/bootstrap-tab.js"></script>
+    <script src="javascripts/bootstrap-tooltip.js"></script>
+    <script src="javascripts/bootstrap-popover.js"></script>
+    <script src="javascripts/bootstrap-button.js"></script>
+    
+    <script src="javascripts/bootstrap-carousel.js"></script>
+    <script src="javascripts/bootstrap-typeahead.js"></script>
+  
+    
+  -->
+    <script src="javascripts/bootstrap-dropdown.js"></script>
+    <script src="javascripts/bootstrap-collapse.js"></script>
+
+    <script src="javascripts/googletrackingcode.js"></script>
+    <script src="javascripts/commentcount.js"></script>
+    <span style="display:none;">
+    <script src="javascripts/baiducountingcode.js"></script>
+    </span>
+  </body>
+</html>
