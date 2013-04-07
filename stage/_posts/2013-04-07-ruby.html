@@ -1,0 +1,99 @@
+---
+layout: detail
+title: ruby学习笔记（二）
+brief: 跟着入门文档做些练习，发现ruby跟coffee一样，都很简洁，写起来很舒服，蛮喜欢的。今天摘抄了一些文档，做个笔记
+---
+
+<h1>{{ page.title }}</h1>
+<h3>{{ page.date | date_to_string }}</h3>
+
+<blockquote>
+<h2>
+  <a href= "http://www.iteye.com/topic/55826">20分钟ruby入门</a>
+</h2>
+原文永久链接地址：
+<a href="http://www.matrix.org.cn/resource/article/2007-02-26/ff82b100-c542-11db-9ca0-c55b502ecb5b.html" >http://www.matrix.org.cn/resource/article/2007-02-26/ff82b100-c542-11db-9ca0-c55b502ecb5b.html</a>
+<h3>介绍</h3>
+<p>这是一个短小的Ruby入门，完全读完只需20分钟。这里假设读者已经安装了Ruby，如果你没有安装的话，请在阅读文前访问Ruby官方网站进行下载并安装。</p>
+<h3>交互式的Ruby</h3>
+<p>打开IRB（交互式Ruby外壳）：
+        如果你使用Mac OS X，那么请打开终端窗口输入irb；
+        如果你使用Linux，那么请打开shell输入irb；
+        如果你使用windows，那么请在开始菜单中找到Ruby->fxri，并执行它。</p>
+<pre>
+  irb(main):001:0>
+</pre>
+Ok，在打开IRB之后，在其中输入"Hello World"。
+<pre>
+  irb(main):001:0> "hello world"
+  => "hello world"
+</pre>
+Ruby听从你的安排!   
+<p>
+发生了什么？我们刚才编写了世界上最短小的“Hello World”程序吗？这么说不太确切。第二行输出是IRB告诉我们：上一个表达式的评估结果。如果我们希望打印出“Hello World”，那么就还需要一点努力：
+</p>
+<pre>
+irb(main):002:0> puts "hello world"
+hello world
+=> nil
+</pre>
+<p>puts 在Ruby中是一个简单的打印输出命令。后面的“=> nil”表示什么？——那是表达式的结果。Puts总是返回nil，这是Ruby中表示“绝对无值”（absolutely-positively- nothing value）的方式，看上去有些类似Java中的null。</p>
+<p>你的免费计算器在这里！    </p>
+<p>无需做什么，我们就能把IRB作为一个简单的计算器使用：</p>
+<pre>
+irb(main):003:0> 3+2
+=> 5
+</pre>
+<p>下面，让我们尝试计算3的平方：</p>
+<pre>
+irb(main):004:0> 3**2
+=> 9
+</pre>
+<p>在Ruby语言中，**表示幂运算。那么如何计算平方根呢？</p>
+<pre>
+irb(main):005:0> Math.sqrt(9)
+=> 3.0
+</pre>
+<p>Ok，等一下，表达式中的sqrt(9)表示什么？你一定能猜到这是计算9的平方根。而Math表示什么？不要着急，下面就让我们进一步了解像Math这样的模块。</p>
+<h3>模块——按照主题分组的代码</h3>
+<p>
+Math 是Ruby内建的数学模块。在Ruby中，模块提供了两种角色：一种角色是将类似的方法聚集在同一个“家族”名下。因此，Math也包括sin、tan这 样的方法。第二种角色是一个圆点（dot），它标记了消息的接收者。什么是消息？在上面的例子中，sqrt(9)便是消息，它意味着调用sqrt方法取出 9的平方根。
+</p>
+<p>
+Sqrt方法调用的结果是3.0。你可能注意到它并不是3。这是因为多数情况下，数字的平方根并不是整数，所以这里返回了一个浮点数。
+</p>
+<p>
+那么我们如何记住这些计算结果呢？——将结果赋值给变量。
+</p>
+<pre>
+irb(main):006:0> a = 3**2
+=> 9
+irb(main):007:0> b = 4**2
+=> 16
+irb(main):008:0> Math.sqrt(a+b)
+=> 5.0
+</pre>
+<h3>如何定义方法？</h3>
+<p>
+如何才能方便省事地随意输出字符串，而无需过多地劳烦我们的手指呢？——我们需要定义一个方法！
+</p>
+<pre>irb(main):009:0> def h
+irb(main):010:1> puts "hello world"
+irb(main):011:1> end
+</pre>
+<p>
+上面的代码中第一行“def h”标志着方法定义的开始。它告诉Ruby我们正在定义一个名为h的方法。下面一行是方法体：puts "Hello World"。最后，也就是第三行“end”通知Ruby我们完成了方法定义。Ruby的回应“=> nil”告诉我们它已经知道我们定义了此方法。
+</p>
+<h3>简短、重复地调用方法     </h3>
+<p>
+ 现在，让我们尝试多次执行这个方法：
+</p>
+<pre>
+irb(main):012:0> h
+hello world
+=> nil
+irb(main):013:0> h()
+hello world
+=> nil
+</pre>
+</blockquote>
