@@ -164,6 +164,239 @@ irb(main):013:0> h()
 hello world
 => nil
 </pre>
+<p>
+哈，这太容易了。在Ruby中调用某个方法只需将方法名提交给Ruby。当然，这是在方法没有参数的情况下。如果你愿意也可以添加一个空白的括号，但是这没有必要。
+</p>
+<p>
+如果我们想对某个人说hello而不是整个“世界”（world），那该怎么做？——重定义h方法使它接收name参数。
+</p>
+<pre>
+irb(main):001:0> def h(name)
+irb(main):002:1> puts "hello #{name}"
+irb(main):003:1> end
+=> nil
+irb(main):004:0> h("daemon")
+hello daemon
+=> nil
+irb(main):005:0>
+</pre>
+<p>
+ 嗯，现在看来工作正常。
+</p>
+<h3>字符串中的奥秘</h3>
+<p>
+	“#{name}”是什么意思？这是Ruby在某个字符串中插入其它字符的方式。在大括号之间放入的字符串（这里是指name）将被外部的字符串代替。你也可以使用字符串类内建的capitalize方法来确保某人名字的首字母大写：
+</p>
+<pre>
+irb(main):005:0> def h(name = "world")
+irb(main):006:1> puts "hello #{name.capitalize}"
+irb(main):007:1> end
+=> nil
+irb(main):008:0> h "daemon"
+hello Daemon
+=> nil
+irb(main):009:0> h
+hello World
+=> nil
+irb(main):010:0>
+</pre>
+<p>
+上面的代码有两个地方需要说明：<br />
+第一，我们通过无括号的方式调用方法，因为括号是可选的；<br />
+第二，这里的默认参数值为“World”。也就是说在调用方法时如果没有提供name参数，则使用默认值“World”。<br />
+</p>
+<h3>进化为Greeter！</h3>
+<p>
+我们是否需要一个真正的问候者（greeter），他能记住你的名字、问候你、总是尊重地向你示好？那么这就最好建立一个“Greeter”类：
+</p>
+<pre>
+irb(main):027:0* class Greeter
+irb(main):028:1>   def initialize(name = "world")
+irb(main):029:2>     @name = name
+irb(main):030:2>   end
+irb(main):031:1>   def say_hi
+irb(main):032:2>     puts "hi #{@name}"
+irb(main):033:2>   end
+irb(main):034:1>   def say_bye
+irb(main):035:2>     puts "bye #{@name}"
+irb(main):036:2>   end
+irb(main):037:1> end
+=> nil
+</pre>
+<p>
+在上面的类代码中定义了一个称为Greeter的类和一些类方法，其中出现了一些新的“关键词”:请注意“@name”，它是类的实例变量，并对类中的所有方法（say_hi和say_bye方法）都有效。
+</p>
+<p>
+ 如何让Greeter类发挥作用？现在让我们来建立一个Greeter对象并使用它！
+</p>
+<pre>
+irb(main):038:0> g = Greeter.new("daemon")
+=> #<Greeter:0x1fa8860 @name="daemon">
+irb(main):039:0> g.say_hi
+hi daemon
+=> nil
+irb(main):040:0> g.say_bye
+bye daemon
+=> nil
+</pre>
+<p>Greeter类的实例对象g被建立后，它便接受了name参数（值为Pat）。那么我们能直接访问name吗？</p>
+<pre>
+irb(main):041:0> g.@name
+SyntaxError: (irb):41: syntax error, unexpected tIVAR
+        from C:/Ruby193/bin/irb:12:in `<main>'
+</pre>
+<p> 看看上面的编译错误来看，这样直接访问name是行不通的。</p>
+<h3>窥视对象的内部  </h3>
+<p>对象中的实例变量总是隐藏于其中，但也并非毫无踪迹可寻，通过审查（inspect）对象便会见到它们。当然还有其它的访问方法，但是Ruby采用了良好的面向对象的方式来保持数据的隐藏性。</p>
+<pre>
+irb(main):047:0* Greeter.instance_methods
+=> [:say_hi, :say_bye, :h, :nil?, :===, :=~, :!~, :eql?, :hash, :<=>, :class, :singleton_class, :clone, :dup, :initialize_dup, :initialize_clone, :taint, :tainted?, :untaint, :untrust, :untrusted?, :trust, :freeze, :frozen?, :to_s, :inspect, :methods, :singleton_methods, :protected_methods, :private_methods, :public_methods, :instance_variables, :instance_variable_get, :instance_variable_set, :instance_variable_defined?, :instance_of?, :kind_of?, :is_a?, :tap, :send, :public_send, :respond_to?, :respond_to_missing?, :extend, :display, :method, :public_method, :define_singleton_method, :object_id, :to_enum, :enum_for, :==, :equal?, :!, :!=, :instance_eval, :instance_exec, :__send__, :__id__]
+irb(main):048:0>
+</pre>
+<p>
+喔！这么多方法，可是我们只定义了两个方法呀？其它的方法又出自何处？不要担心，instance_methods方法列出了Greeter对象的所有方 法，其中包括父类中定义的方法。如果我们只想对Greeter类的方法进行列表的话，那么把false作为参数调用instance_methods方法 即可。false意味着我们不需要父类定义的方法。
+</p>
+<pre>
+irb(main):054:0* Greeter.instance_methods(false)
+=> [:say_hi, :say_bye]
+irb(main):055:0>
+</pre>
+<p>哈哈，这才是我们想要的。下面让我们看看Greeter对象能回应哪些方法：</p>
+<pre>
+irb(main):055:0> g.respond_to?("name")
+=> false
+irb(main):056:0> g.respond_to?("say_hi")
+=> true
+irb(main):057:0> g.respond_to?("to_s")
+=> true
+irb(main):058:0>
+</pre>
+<p> 它知道say_hi、to_s（此方法将对象转换为字符串，是任何对象都必备的默认方法，很想Java中的toString方法），但它不知道name。</p>
+<h3>随时修改类定义 </h3>
+<p> 如何才能查看或者修改name呢？Ruby提供了访问对象变量的简单方法：
+</p>
+<pre>
+irb(main):061:0* class Greeter
+irb(main):062:1>   attr_accessor :name
+irb(main):063:1> end
+=> nil
+irb(main):064:0>
+</pre>
+<p>在Ruby语言中，你能够多次打开某个类并修改它。而修改所带来的变化将应用在此后建立的任何新对象中、甚至现存的此类对象中。下面让我们建立一个新对象并访问它的@name属性。
+</p>
+<pre>
+irb(main):064:0> g = Greeter.new("andy")
+=> #<Greeter:0x2112678 @name="andy">
+irb(main):065:0> g.respond_to?("name")
+=> true
+irb(main):066:0> g.respond_to?("name=")
+=> true
+irb(main):067:0> g.say_hi
+hi andy
+=> nil
+irb(main):068:0> g.name = "betty"
+=> "betty"
+irb(main):069:0> g
+=> #<Greeter:0x2112678 @name="betty">
+irb(main):070:0> g.name
+=> "betty"
+irb(main):071:0> g.say_hi
+hi betty
+=> nil
+</pre>
+<p>
+我们通过使用attr_accessor定义了两个方法：
+        “.name”用来获取name属性值；
+        “.name=”用来设置namee属性值。
+        这很类似在Java类中访问被Public修饰的成员变量。
+</p>
+<h3>
+向每个人问候，MegaGreeter不会漏掉一个人   
+</h3>
+<p>
+Greeter并不完美，因为它只能一次服务一个人。所以我们在这里设计一个能够一次向全世界、世界上每个人或者在名单中的人发送问候的MegaGreeter类。在这里，我们将放弃从前的IRB交互模式，转而改为编写Ruby程序文件。
+
+        退出IRB的方法：输入“quit”、“exit”或者按下Control+D的组合键。
+</p>
+<pre>
+class MegaGreeter
+	attr_accessor :names
+	def initialize(names = "World")
+		@names = names
+	end
+
+	def say_hi
+		if @names.nil?
+			puts "..."
+		elsif @names.respond_to?("each")
+			@names.each do |name|
+				puts "Hello #{name}"
+			end
+		else
+			puts "Hello #{@names}"
+		end
+	end
+
+	def say_bye
+    if @names.nil?
+      puts "..."
+    elsif @names.respond_to?("join")
+      # Join the list elements with commas
+      puts "Goodbye #{@names.join(", ")}.  Come back soon!"
+    else
+      puts "Goodbye #{@names}.  Come back soon!"
+    end
+  end
+
+end
+
+if __FILE__ == $0
+	puts File.dirname(__FILE__)
+	puts $0
+  mg = MegaGreeter.new
+  mg.say_hi
+  mg.say_bye
+
+  # Change name to be "Zeke"
+  mg.names = "Zeke"
+  mg.say_hi
+  mg.say_bye
+
+  # Change the name to an array of names
+  mg.names = ["Albert", "Brenda", "Charles",
+    "Dave", "Englebert"]
+  mg.say_hi
+  mg.say_bye
+
+  # Change to nil
+  mg.names = nil
+  mg.say_hi
+  mg.say_bye
+end
+</pre>
+<p>保存上面的代码到名为“ri20min.rb”的文件中，并使用“ruby ri20min.rb”的命令执行它。程序输出如下：</p>
+<pre>
+E:\rubyTest>ruby MegaGreeter.rb
+.
+MegaGreeter.rb
+Hello World
+Goodbye World.  Come back soon!
+Hello Zeke
+Goodbye Zeke.  Come back soon!
+Hello Albert
+Hello Brenda
+Hello Charles
+Hello Dave
+Hello Englebert
+Goodbye Albert, Brenda, Charles, Dave, Englebert.  Come back soon!
+...
+...
+
+E:\rubyTest>
+</pre>
+<p>下面我们将深入了解一下上面的代码。</p>
+<p>请注意上面代码中的起始行，它以#开头。在Ruby语言中，任何以#开头的行都被视为注释，并被解释程序忽略。</p>
+<p> 我们的say_hi方法已经发生了变化：</p>
 </blockquote>
       </div>
       <div id="disqus_thread"></div>
