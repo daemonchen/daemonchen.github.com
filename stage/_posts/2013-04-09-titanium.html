@@ -1,0 +1,49 @@
+---
+layout: detail
+title: titanium中intent的使用
+brief: 我们都知道在android如何使用intent，但是ti中如何使用呢，由于在项目中需要用到微博分享以及短信发送功能，所以查了些资料，这里mark一下
+---
+
+<h1>{{ page.title }}</h1>
+<h3>{{ page.date | date_to_string }}</h3>
+
+<blockquote>
+<p>我们都知道在android如何使用intent，但是ti中如何使用呢，由于在项目中需要用到微博分享以及短信发送功能，所以查了些资料，这里mark一下</p>
+<p>关于android的intent的相关学习，可以先看<a href="http://note.youdao.com/share/?id=21be02ae5d4ca7cd4bfb01111209d6de&type=note">这里</a></p>
+<p>这里割一下(天王盖地虎，小鸡炖蘑菇)</p>
+<h3>使用intent来实现分享功能</h3>
+<p>在android的sns分享，有两种做法，一种是调用各大sns的android接口，比如<a href="http://open.weibo.com/wiki/Android_SDK%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3">sina微博android SDK</a>
+另一种，是使用intent，来启动手机内其他有分享功能的activity，本文主要介绍这一种方法。因为，简单。。。。
+</p>
+<p>在ti中，封装了android的intent，所以使用起来略有不同，下面是代码。createIntent方法接收2个参数，<a href="http://docs.appcelerator.com/titanium/3.0/#!/api/Titanium.Android">action</a>是对要执行的动作的一个描述；type定义了这个intent的MIME类型</p>
+<p>由于手机中会有很多action_send的activity，所有需要创建一个<a href="http://docs.appcelerator.com/titanium/3.0/#!/api/Titanium.Android-method-createIntentChooser" >intentchooser</a>来让用户自己选择要用哪个activity来分享。</p>
+<pre>
+shareIntent = Ti.Android.createIntent
+  action: Ti.Android.ACTION_SEND
+  type:'text/plain'
+shareIntent.putExtra(Ti.Android.EXTRA_SUBJECT, "#天王盖地虎#");
+shareIntent.putExtra(Ti.Android.EXTRA_TEXT, "#小鸡炖蘑菇#");
+chooserIntent = Ti.Android.createIntentChooser(shareIntent, "分享");
+Ti.Android.currentActivity.startActivity(chooserIntent);
+</pre>
+
+<p>
+上面代码对应的android代码如下：
+</p>
+<pre>
+Intent intent=new Intent(Intent.ACTION_SEND);
+intent.setType("text/plain");
+intent.putExtra(Intent.EXTRA_SUBJECT, '#天王盖地虎#');
+intent.putExtra(Intent.EXTRA_TEXT, "#小鸡炖蘑菇#");
+startActivity(Intent.createChooser(intent, getTitle()));
+</pre>
+<h3>实现短信发送功能</h3>
+<p>实现短信发送，只要使用action_sendto就可以了，只是由于Ti文档的匮乏，参数该如何传递，让我纠结了一会。不过查看了<a href="http://developer.android.com/reference/android/content/Intent.html#ACTION_SENDTO">android的ACTION_SENDTO文档</a>，被我猜了出来</p>
+<pre>
+shareIntent = Ti.Android.createIntent
+    action: Ti.Android.ACTION_SENDTO
+    data:'smsto:13725689547'
+shareIntent.putExtra(Ti.Android.EXTRA_TEXT, L('shareMessageContent'));
+Ti.Android.currentActivity.startActivity(shareIntent);
+</pre>
+</blockquote>

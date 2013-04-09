@@ -11,8 +11,12 @@ brief: 跟着入门文档做些练习，发现ruby跟coffee一样，都很简洁
 <h2>
   <a href= "http://www.iteye.com/topic/55826">20分钟ruby入门</a>
 </h2>
-原文永久链接地址：
-<a href="http://www.matrix.org.cn/resource/article/2007-02-26/ff82b100-c542-11db-9ca0-c55b502ecb5b.html" >http://www.matrix.org.cn/resource/article/2007-02-26/ff82b100-c542-11db-9ca0-c55b502ecb5b.html</a>
+<h3>
+<a href="http://www.iteye.com/topic/55826">译文转载自iteye</a>
+<br />
+<a href="http://www.matrix.org.cn/resource/article/2007-02-26/ff82b100-c542-11db-9ca0-c55b502ecb5b.html" >原文永久链接地址</a>
+</h3>
+
 <h3>介绍</h3>
 <p>这是一个短小的Ruby入门，完全读完只需20分钟。这里假设读者已经安装了Ruby，如果你没有安装的话，请在阅读文前访问Ruby官方网站进行下载并安装。</p>
 <h3>交互式的Ruby</h3>
@@ -329,4 +333,66 @@ E:\rubyTest>
 <p>下面我们将深入了解一下上面的代码。</p>
 <p>请注意上面代码中的起始行，它以#开头。在Ruby语言中，任何以#开头的行都被视为注释，并被解释程序忽略。</p>
 <p> 我们的say_hi方法已经发生了变化：</p>
+<pre>
+def say_hi
+  if @names.nil?
+    puts "..."
+  elsif @names.respond_to?("each")
+    @names.each do |name|
+      puts "Hello #{name}"
+    end
+  else
+    puts "Hello #{@names}"
+  end
+end
+</pre>
+<p>
+它查找@names参数并按照其参数值作出决定：
+        如果参数值为nil，它将打印三个圆点。
+        那么@names.respond_to?("each")表示什么？
+</p>
+<h3>循环——也叫迭代</h3>
+<p>
+ 如果@names对象具有each方法，那么它是可以被迭代的，进而可以对其进行迭代，从而问候列表中每个人。如果@names不具备each方法，则将它自动转换为字符串，并执行默认的问候。
+</p>
+<p>
+each 是一种方法，它接受一个代码块（block of code），然后针对列表中的每个成员执行这个代码块，而在do和end之间的部分便是这个非常类似匿名函数的代码块。在管道符之间的变量是代码块的参数 name，它作为代码块参数被绑定为列表成员，而代码块puts "Hello #{name}!"将使用这个参数进行输出。
+</p>
+<p>
+大多数其它的编程语言使用循环遍历列表，下面是C语言的循环示例：
+</p>
+<pre>
+for (i=0; i < number_of_elements; i++)
+  {
+    do_something_with(elements[i])
+  }
+</pre>
+<p>
+上面的代码显然可以工作，但它不够“优雅”！你不得不用i这个多余的循环变量，还需要指出列表的长度，然后再解释如何遍历列表。
+</p>
+<p>
+Ruby的迭代方式则更加优雅，所有的内部管理细节都隐藏在each方法中，你所需做的就是告诉它如何处理其中的每个成员。
+</p>
+<h3>
+块，Ruby边缘的高亮点！
+</h3>
+<p>
+块(block)的真正优势在于：能够处理比列表更加复杂的对象。除了在方法中可以处理简单的内部管理细节外，你还能处理setup、teardown和所有错误，而不让用户有所察觉。
+</p>
+<p>
+say_bye方法没有使用each，而是检查@names是否具有join方法，如果具有join方法，则调用join方法。否则它将直接打印@names变量。
+</p>
+<p>
+此方法并不关心变量的实际类型，这依赖于它所支持的那些被称为“Duck Typing” 的方法：duck typing是动态类型的一种形式：变量的值自身隐含地决定了了变量的行为。这暗示了某个对象与其它实现了相同接口的对象之间是可交换的，不管对象之间是 否具有继承关系。鸭子测试（duck test）是对duck typing的一种形象比喻——“如果它走路像鸭子，那么也一定像鸭子一样呷呷地叫，那么它必定是一只鸭子”。duck typing是某些编程语言的特性：如Smalltalk, Python, Ruby, ColdFusion。
+</p>
+<p>
+Duck Typing的益处是无需对变量的类型进行严格地限制，如果某人使用一种新类型的列表类，只要它实现了与其它列表相同语义的join方法，便可以拿来使用。
+</p>
+<h3>
+启动脚本
+</h3>
+<p>
+文件上半部分是MegaGreeter类的代码，而后面剩下的部分则是对这些类方法的调用。而这是我们最后值得注意的一点：
+</p>
+<p>__FILE__ 是一个“具有魔力”的变量，它代表了当前文件名。$0是用于启动程序的文件名。那么代码“if __FILE__ == $0”便意味着检查此文件是否为将被使用的主程序文件。这样做可以使程序文件作为代码库使用，而不是可执行代码；但当此文件被用作执行文件时，也可被执 行。</p>
 </blockquote>
