@@ -1,0 +1,105 @@
+---
+layout: detail
+title: Ti.Network.Socket跟服务器建立socket链接
+brief: 尝试了一下ti通过socket跟服务器建立链接。server用了node，发现node的socket果然比java的简单。目前只在android上测试通过了。ios还木有测。
+---
+
+<h1>{{ page.title }}</h1>
+<h3>{{ page.date | date_to_string }}</h3>
+<p itemscope>
+	尝试了一下<span itemprop='name'>titanium</span>通过<span itemprop='name'>socket</span>跟服务器建立链接。server用了<a href="http://nodejs.org/" itemprop='name'>node</a>，发现node的socket果然比java的简单。目前只在android上测试通过了。ios还木有测。
+</p>
+<p itemscope>
+	<a itemprop="url" href="/demo/socket/client.coffee">client端代码</a>
+</p>
+<pre>
+initSocket = ->
+  connectSocket = Ti.Network.Socket.createTCP
+    host:'192.168.26.95'
+    port:9091
+    connected:(e)->
+      postConnect()
+      readResponse(e)
+    error:(e)->
+      Ti.API.info('Error (' + e.errorCode + '): ' + e.error)
+  postConnect = ->
+    writtenBuffer = Ti.createBuffer
+      value:'天王盖地虎'
+    connectSocket.write writtenBuffer
+
+  readResponse = (e)->
+    #读取server返回的数据，并传给readCallback来处理
+    # http://docs.appcelerator.com/titanium/3.0/#!/api/Titanium.Stream
+    Ti.Stream.pump(e.socket, readCallback, 1024, true); 
+
+  readCallback = (e)->
+    if e.bytesProcessed is -1
+      console.error 'end'
+    try 
+      if e.buffer
+        received = e.buffer.toString()
+        Ti.API.error('data from server: ' + received)
+      else 
+        Ti.API.error('Error: read callback called with no buffer!')
+        
+    catch ex
+      Ti.API.error(ex)
+
+  connectSocket
+
+
+socketInstance = initSocket()
+socketInstance.connect() 
+
+setInterval ->
+  #自动断点重连
+  if socketInstance.getState() is Ti.Network.Socket.ERROR
+    socketInstance = initSocket()
+    socketInstance.connect()
+,2000
+</pre>
+<p>这里通过ti的接口创建了一个socket对象，向服务器发送和接收数据，并且会在服务器链接出错后重新链接</p>
+<p>
+	<a itemprop="url" href="/demo/socket/server.coffee">server端代码</a>
+</p>
+<pre>
+net = require('net')
+listenPort = 9091
+
+doSetTimeout = (socket)->
+  setInterval ->
+    timeStamp = new Date().getTime()
+    socket.write(timeStamp.toString())
+  ,500
+
+server = net.createServer (socket)->
+  socket.write('小鸡炖蘑菇');
+  doSetTimeout(socket)
+
+  socket.on 'data',(data)->
+    console.log('data from client:' + data)
+
+  socket.on 'error',(exception)->
+    console.log('socket error:' + exception)
+    socket.end()
+
+  socket.on 'close',(data)->
+    console.log('client is closed');
+
+
+
+server.listen(listenPort);
+
+server.on 'listening',->
+  console.log("server listening:" + server.address().port)
+
+server.on "error",(exception)->
+  console.log("server error:" + exception)
+</pre>
+<p>
+这里起了一个socket服务，并且从client接收信息和发送信息到client
+</p>
+<p class="muted" itemscope>
+  本文的代码使用了
+  <a href="http://coffeescript.org/" itemprop='url'>coffee语法</a>
+</p>
