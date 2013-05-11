@@ -1,12 +1,7 @@
-$(function(){
- /*---------------------------------- */
-
-/* @fillParent*/
-
 (function($) {
-
-	$.fn.fillParent = function(params) {
-		params = $.extend({
+$.fn.extend({
+	fillParent:function(params){
+	params = $.extend({
 
 			minWidth : 0,
 			minHeight : 0,
@@ -14,7 +9,6 @@ $(function(){
 
 		}, params);
 		return this.each(function() {
-
 			var elem = $(this);
 			var newposition = null;
 			var ratio = 0;
@@ -103,7 +97,6 @@ $(function(){
 
 			}
 			if(elem.is('img')) {
-				console.error('is img');
 				var img = new Image();
 				function getRatio() {
 					ratio = img.width / img.height;
@@ -131,11 +124,11 @@ $(function(){
 				ratio = elem.width() / elem.height();
 			}
 
-			// $(window).bind('resize', onResize).resize();
-			$(window).resize(function(){
+			$(window).bind('resize', onResize).resize();
+			/*$(window).resize(function(){
 				console.error('sdf');
 				onResize();
-			});
+			});*/
 
 			if($('body').hasClass('ipad')) {
 
@@ -146,10 +139,8 @@ $(function(){
 			}
 
 		});
-	};
-})(jQuery);
-
-
-/* ----------------------------------*/
-
+		
+	}
 })
+	
+})(jQuery);
