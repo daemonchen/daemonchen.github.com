@@ -59,6 +59,7 @@ img{ display:block;}
     position:absolute;
     top:50%;
     margin-top:-18.5px;
+	z-index:12;
 }
 .content-prev{
     left:0;
@@ -69,7 +70,7 @@ img{ display:block;}
 }
 .content-all{
     background:url(../images/idea-cont.jpg) no-repeat center center;
-    width:987px;
+    
     margin:0px auto;
     overflow:hidden;
 }
@@ -90,8 +91,8 @@ img{ display:block;}
 .series{  min-height:450px; color:#c28148; position:relative; overflow:hidden; background:none;}
 /*.series ul{ overflow:hidden; width:1000%; position:absolute;}*/
 .series li{ float:left; position:relative; overflow:hidden; min-width:980px; min-height:450px;}
-.strength_area{ position:absolute; right:5em; bottom:100px;}
-.strength_item{ color:#c28148; margin-bottom:50px; width:310px;}
+.strength_area{ position:absolute; right:10em; bottom:100px;}
+.strength_item{ color:#c28148; margin-bottom:50px; width:240px;}
 .strength_item .strength_text{ position:relative;}
 .strength_item h2{ font:bold 24px/30px 'Arial,宋体';}
 .strength_item .strength_content{ font:14px/20px 'Arial,宋体'; height:80px; margin-right:20px; overflow:hidden;}
@@ -172,7 +173,7 @@ li.ww3 img{ margin-top:135px;}
 
 
 /*------------------------------------auspicious----------------------------------------*/
-.auspicious{ overflow:hidden; min-width:1220px; width:100%;}
+.auspicious{ overflow:hidden; min-width:980px; width:100%;}
 .auspicious .content-all{background:none; min-width:1220px; width:100%; height:auto; margin:auto; z-index:1; overflow:hidden;}
 .auspicious .content-all li{ float:left; position: relative; overflow:hidden; min-width:980px; width:100%; min-height:450px;}
 .auspicious .content-all li .strength_item{ width:240px;}
@@ -248,7 +249,7 @@ li.ww3 img{ margin-top:135px;}
 .footer-second-list ul.ul3{ margin-left:100px;}
 .footer-second-list ul.ul4{ margin-left:150px;}
 .footer-second-list li{ line-height:24px;}
-.footer-second-content{ width:400px; margin:auto;}
+.footer-second-content{ width:258px; margin:auto;}
 .footer-second-content a:hover{ color:#fff;}
 .footer-text-list{ font-size:12px; font-weight:bold; width:258px; height:47px; line-height:47px; margin:auto;}
 .footer-text-list span{ float:left; width:50px; text-align:center; position:relative; background:url(about:blank);color:#999;}

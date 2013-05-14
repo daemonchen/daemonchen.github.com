@@ -240,6 +240,7 @@
   <script type="text/javascript" src="js/fillParent.js"></script>
   <script type="text/javascript" src="js/wood.js"></script>
   <script type="text/javascript">
+  $('#seriesSeamless').find('img').fillParent()
     var seam = new seamless('#seriesSeamless', {
       'elements': 'ul li',
       'triggers': '#horscrollcontainer li',
@@ -261,7 +262,7 @@
     headerScroll();
 
     footerNavigation();
-	$('#seriesSeamless').find('img').fillParent()
+	
   </script>
   	</div>
 </body>

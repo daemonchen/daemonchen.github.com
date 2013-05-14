@@ -43,7 +43,7 @@
 	      	<div id="seriesSeamless" class="content-all statement-all">
               <ul>
                 <li class="auspicious_row aw1">
-                  <img src="images/auspicious_img1.jpg" />
+                  <img src="images/auspicious_img1_resize.jpg" />
                   <div class="strength_area">
                     <div class="strength_item">
                       <h2>[貔貅·兴]</h2>
@@ -71,7 +71,7 @@
                   </div>
                 </li>
                 <li class="auspicious_row">
-                  <img src="images/auspicious_img2.jpg" />
+                  <img src="images/auspicious_img2_resize.jpg" />
                   <div class="strength_area">
                     <div class="strength_item">
                       <h2>[貔·旺]</h2>
@@ -385,6 +385,7 @@
    <script type="text/javascript" src="js/fillParent.js"></script>
   <script type="text/javascript" src="js/wood.js"></script>
   <script type="text/javascript">
+  $('#seriesSeamless').find('img').fillParent({align : 'horizontal'})
     var seam = new seamless('#seriesSeamless', {
       'elements': 'ul li',
       'triggers': '#horscrollcontainer li',
@@ -406,7 +407,7 @@
     headerScroll();
 
     footerNavigation();
-	$('#seriesSeamless').find('img').fillParent()
+	
   </script>
   	</div>
 </body>
