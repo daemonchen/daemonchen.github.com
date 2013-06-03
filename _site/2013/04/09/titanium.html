@@ -1,0 +1,232 @@
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu_union_verify" content="4c2699c961836335046b34d583e2f1e8">
+  <meta name="baidu-site-verification" content="W5ActQDR7D07HRCs" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <link href="/stylesheets/bootstrap.css" rel="stylesheet">
+  <style type="text/css">
+    body {
+      padding-top: 80px;
+      padding-bottom: 40px;
+    }
+  </style>
+  <link href="/stylesheets/bootstrap-responsive.css" rel="stylesheet">
+
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+    <script src="../assets/js/html5shiv.js"></script>
+  <![endif]-->
+
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-114.png" />
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-144.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144.png" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <title>Classical1988</title>
+  <meta name="description" content="my blog">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <base target=_blank>
+</head>
+
+<body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active">
+                  <a href="/"><h1>Home</h1></a>
+              </li>
+              <li>
+                <a href="#"><h3>About</h3></a>
+              </li>
+              <li>
+                <a href="https://github.com/daemonchen/daemonchen.github.com">
+                  <h3>Contact</h3></a>
+              </li>  
+            </ul>
+            
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">      
+      <div class="row">
+        <div class="span9">
+          <h1>titanium中intent的使用</h1>
+<h3>09 Apr 2013</h3>
+
+<blockquote>
+<p>我们都知道在android如何使用intent，但是ti中如何使用呢，由于在项目中需要用到微博分享以及短信发送功能，所以查了些资料，这里mark一下</p>
+<p>关于android的intent的相关学习，可以先看<a href="http://note.youdao.com/share/?id=21be02ae5d4ca7cd4bfb01111209d6de&type=note">这里</a></p>
+<p>这里割一下(天王盖地虎，小鸡炖蘑菇)</p>
+<h3>使用intent来实现分享功能</h3>
+<p>在android的sns分享，有两种做法，一种是调用各大sns的android接口，比如<a href="http://open.weibo.com/wiki/Android_SDK%E8%AF%B4%E6%98%8E%E6%96%87%E6%A1%A3">sina微博android SDK</a>
+另一种，是使用intent，来启动手机内其他有分享功能的activity，本文主要介绍这一种方法。因为，简单。。。。
+</p>
+<p>在ti中，封装了android的intent，所以使用起来略有不同，下面是代码。createIntent方法接收2个参数，<a href="http://docs.appcelerator.com/titanium/3.0/#!/api/Titanium.Android">action</a>是对要执行的动作的一个描述；type定义了这个intent的MIME类型</p>
+<p>由于手机中会有很多action_send的activity，所有需要创建一个<a href="http://docs.appcelerator.com/titanium/3.0/#!/api/Titanium.Android-method-createIntentChooser" >intentchooser</a>来让用户自己选择要用哪个activity来分享。</p>
+<pre>
+shareIntent = Ti.Android.createIntent
+  action: Ti.Android.ACTION_SEND
+  type:'text/plain'
+shareIntent.putExtra(Ti.Android.EXTRA_SUBJECT, "#天王盖地虎#");
+shareIntent.putExtra(Ti.Android.EXTRA_TEXT, "#小鸡炖蘑菇#");
+chooserIntent = Ti.Android.createIntentChooser(shareIntent, "分享");
+Ti.Android.currentActivity.startActivity(chooserIntent);
+</pre>
+
+<p>
+上面代码对应的android代码如下：
+</p>
+<pre>
+Intent intent=new Intent(Intent.ACTION_SEND);
+intent.setType("text/plain");
+intent.putExtra(Intent.EXTRA_SUBJECT, '#天王盖地虎#');
+intent.putExtra(Intent.EXTRA_TEXT, "#小鸡炖蘑菇#");
+startActivity(Intent.createChooser(intent, getTitle()));
+</pre>
+<h3>实现短信发送功能</h3>
+<p>实现短信发送，只要使用action_sendto就可以了，只是由于Ti文档的匮乏，参数该如何传递，让我纠结了一会。不过查看了<a href="http://developer.android.com/reference/android/content/Intent.html#ACTION_SENDTO">android的ACTION_SENDTO文档</a>，被我猜了出来</p>
+<pre>
+shareIntent = Ti.Android.createIntent
+    action: Ti.Android.ACTION_SENDTO
+    data:'smsto:13725689547'
+shareIntent.putExtra(Ti.Android.EXTRA_TEXT, L('shareMessageContent'));
+Ti.Android.currentActivity.startActivity(shareIntent);
+</pre>
+<p class="muted">
+  ps:本文的代码使用了
+  <a href="http://coffeescript.org/">coffee语法</a>
+</p>
+</blockquote>
+          <div id="disqus_thread"></div>
+        </div>
+        <div class="span3">
+          <div class="sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header"><h1>docs</h1></li>
+              <li>
+                <a href="http://twitter.github.io/bootstrap/"><h3>Bootstrap</h3></a>
+              </li>
+              <li>
+                <a href="http://pages.github.com/">
+                  <h3>github pages</h3>
+                </a>
+              </li>
+              <li>
+                <a href="http://coffeescript.org/">
+                  <h3>coffee-script</h3>
+                </a>
+              </li>
+              <li>
+                <a href="http://nodejs.org/">
+                  <h3>node.js</h3>
+                </a>
+              </li>
+              <li>
+                <a href="http://docs.appcelerator.com/titanium/latest/">
+                  <h3>Titanium</h3>
+                </a>
+              </li>
+              <li>
+                <a href="http://www.ruby-lang.org/zh_cn/">
+                  <h3>Ruby</h3>
+                </a>
+              </li>
+              <li>
+                <a href="http://www.w3cfuns.com/">
+                  <h3>w3cfuns</h3>
+                </a>
+              </li>
+              <li class="nav-header">
+                <h1>圈子</h1>
+              </li>
+              <li>
+                <a href="http://hidali.com/">
+                  <h3>大力总监</h3>
+                </a>
+              </li>
+              <li>
+                <a href="http://btang.cn/">
+                  <h3>原木游戏</h3>
+                </a>
+              </li>
+              <li>
+                <a href="http://www.w3cdream.com/">
+                  <h3>w3cdream</h3>
+                </a>
+              </li>
+              <li>
+                <a href="http://www.jqshare.com/">
+                  <h3>jquery特效</h3>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <hr>
+
+      <footer class="navbar">
+        <ul class="nav">
+          <li>
+              <a style="padding:0; border:2px solid #555;" href="https://github.com/daemonchen" class=""><img src="https://secure.gravatar.com/avatar/b296cd51fec6c36a6cd0d590ba3446ac?s=30&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="48" height="48"/></a>
+          </li>
+          <li>
+            <a href="https://github.com/daemonchen">快乐前行 低迷折回</a>
+          </li>
+        </ul>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+  <!--
+    <script src="/javascripts/bootstrap-transition.js"></script>
+    <script src="/javascripts/bootstrap-alert.js"></script>
+    <script src="/javascripts/bootstrap-modal.js"></script>
+    
+    <script src="/javascripts/bootstrap-scrollspy.js"></script>
+    <script src="/javascripts/bootstrap-tab.js"></script>
+    <script src="/javascripts/bootstrap-tooltip.js"></script>
+    <script src="/javascripts/bootstrap-popover.js"></script>
+    <script src="/javascripts/bootstrap-button.js"></script>
+    
+    <script src="/javascripts/bootstrap-carousel.js"></script>
+    <script src="/javascripts/bootstrap-typeahead.js"></script>
+  
+    
+  -->
+    <script src="/javascripts/bootstrap-dropdown.js"></script>
+    <script src="/javascripts/bootstrap-collapse.js"></script>
+    
+    <script src="/javascripts/googletrackingcode.js"></script>
+    <script src="/javascripts/disqus_thread.js"></script> 
+
+    <!-- JiaThis Button BEGIN -->
+    <script type="text/javascript">
+    var jiathis_config = {data_track_clickback:'true'};
+    </script>
+    <script type="text/javascript" src="http://v3.jiathis.com/code/jiathis_r.js?move=0&amp;uid=1347323726704264" charset="utf-8"></script>
+    <!-- JiaThis Button END -->
+  </body>
+</html>

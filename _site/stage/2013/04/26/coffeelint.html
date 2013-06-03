@@ -1,0 +1,220 @@
+<h1>Use Coffeelint To Make Your Coffee Code Is Lint Free</h1>
+<h3>26 Apr 2013</h3>
+<h3>概述</h3>
+<span class='muted'>本文翻译自
+  <a href="http://www.coffeelint.org/">CoffeeLint</a>
+</span>
+<p>CoffeeLint可以用来检查代码格式以保证你的<a href="http://coffeescript.org/">CoffeeScript</a> 代码是干净并且风格一致的。CoffeeScript可以帮助我们更友好的写javascript从而远离那些糟糕的部分，但是它不能帮助我们保持代码风格的一致性，而CoffeeLint可以帮助我们。
+</br>
+CoffeeLint还刚刚起步，感谢所有的反馈。如果你有什么想法，想要提交错误报告或者任何其他想要告诉我们的，请到<a href="https://github.com/clutchski/coffeelint/issues">issue page</a>
+</p>
+<h3>安装</h3>
+<p>在安装有<a href="http://nodejs.org/">node</a>和<a href="http://npmjs.org/">npm</a>的环境下运行如下命令:</p>
+<pre>npm install -g coffeelint</pre>
+<p>如果不想在全局安装，就去掉-g参数</p>
+<h3>用法</h3>
+<p>安装完以后，可以用如下命令来lint你的代码:</p>
+<pre>coffeelint application.coffee</pre>
+<p>可以使用自定义的配置来lint代码:</p>
+<pre>coffeelint -f config.json application.coffee</pre>
+<p>也可以lint目录下所有文件:</p>
+<pre>coffeelint -f coffeelint-config.json -r YtxMobile\app</pre>
+<p>如果有错误，会返回非零的代码提示</p>
+<pre> Lint! » 16 errors and 101 warnings in 127 files</pre>
+<p>自定义配置文件的命令如下:</p>
+<pre>coffeelint --makeconfig > config.json</pre>
+<h3>命令参数</h3>
+<pre>
+Options:
+  -f, --file     Specify a custom configuration file.
+  --noconfig     Ignores the environment variable COFFEELINT_CONFIG.  [boolean]
+  -h, --help     Print help information.
+  -v, --version  Print current version number.
+  -r             Recursively lint .coffee files in subdirectories.    [boolean]
+  --csv          Use the csv reporter.                                [boolean]
+  --jslint       Use the JSLint XML reporter.                         [boolean]
+  --nocolor      Don't colorize the output                            [boolean]
+  -s, --stdin    Lint the source from stdin                           [boolean]
+  -q, --quiet    Only print errors.                                   [boolean]
+</pre>
+<h3>配置参数</h3>
+<p>默认情况下，CoffeeLint会按照默认情况来lint代码，但是所有规则都是可选并且可以配置的。 可以根据需要重写CoffeeLint的默认选项，生成配置文件，比如激活一个选项，设置它的级别为错误，或者禁用一个选项，设置它的级别为可忽略的。如果你设置级别为警告，会有警告报告，但是不会有非零的退出代码，就是说，不要紧，继续吧。。。</p>
+<table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="rule">indentation</td>
+              <td class="description">
+    This rule imposes a standard number of spaces to be used for indentation.
+    Since whitespace is significant in CoffeeScript, it's critical that a project
+    chooses a standard indentation format and stays consistent. Other roads lead
+    to darkness.
+<pre><code># Enabling this option will prevent this ugly
+# but otherwise valid CoffeeScript.
+twoSpaces = () -&gt;
+  fourSpaces = () -&gt;
+      eightSpaces = () -&gt;
+            'this is valid CoffeeScript'
+
+</code>
+</pre>
+    Two space indentation is enabled by default.
+                   </td>
+               </tr>
+               <tr>
+                 <td class="rule">max_line_length</td>
+                 <td class="description">
+    This rule imposes a maximum line length on your code. <a href="http://www.python.org/dev/peps/pep-0008/">Python's style guide</a> does a good job explaining why you might want to limit the length of your lines, though this is a matter of taste.
+
+    Lines can be no longer than eighty characters by default.
+                  </td>
+                </tr>
+                <tr>
+                  <td class="rule">camel_case_classes</td>
+                  <td class="description">
+    This rule mandates that all class names are camel cased. Camel casing class names
+    is a generally accepted way of distinguishing constructor functions - which require the 'new'
+    prefix to behave properly - from plain old functions.
+<pre><code># Good!
+class BoaConstrictor
+
+# Bad!
+class boaConstrictor
+</code>
+</pre>
+    This rule is enabled by default.
+                  </td>
+                </tr>
+                <tr>
+                  <td class="rule">no_trailing_semicolons</td>
+                  <td class="description">
+    This rule prohibits trailing semicolons, since they are needless cruft in CoffeeScript.
+<pre><code># This semicolon is meaningful.
+x = '1234'; console.log(x)
+
+# This semicolon is redundant.
+alert('end of line');
+</code>
+</pre>
+    Trailing semicolons are forbidden by default.
+                  </td>
+                </tr>
+                <tr>
+                  <td class="rule">no_implicit_braces</td>
+                  <td class="description">
+    This rule prohibits implicit braces when declaring object literals. Implicit braces
+    can make code more difficult to understand, especially when used in combination with
+    optional parenthesis.
+<pre><code># Do you find this code ambiguous? Is it a
+# function call with three arguments or four?
+myFunction a, b, 1:2, 3:4
+
+# While the same code written in a more
+# explicit manner has no ambiguity.
+myFunction(a, b, {1:2, 3:4})
+</code>
+</pre>
+    Implicit braces are permitted by default, since their use is idiomatic
+    CoffeeScript.
+                  </td>
+                </tr>
+                <tr>
+                  <td class="rule">no_implicit_parens</td>
+                  <td class="description">
+    This rule prohibits implicit parens on function calls.
+<pre><code># Some folks don't like this style of coding.
+myFunction a, b, c
+
+# And would rather it always be written like this:
+myFunction(a, b, c)
+</code>
+</pre>
+    Implicit parens are permitted by default, since their use is idiomatic
+    CoffeeScript.
+                  </td>
+                </tr>
+                <tr>
+                  <td class="rule">no_empty_param_list</td>
+                  <td class="description">
+    This rule prohibits empty parameter lists in function definitions.
+<pre><code># The empty parameter list in here is unnecessary:
+myFunction = () -&gt;
+
+# We might favor this instead:
+myFunction = -&gt;
+</code>
+</pre>
+    Empty parameter lists are permitted by default.
+                  </td>
+                </tr>
+                <tr>
+                  <td class="rule">no_tabs</td>
+                  <td class="description">
+  This rule forbids tabs in indentation. Enough said. It is enabled by default.
+                </td></tr>
+                <tr>
+                  <td class="rule">no_trailing_whitespace</td>
+                  <td class="description">
+    This rule forbids trailing whitespace in your code, since it is needless cruft. It is enabled by default.
+                  </td>
+                </tr>
+                <tr>
+                  <td class="rule">no_plusplus</td>
+                  <td class="description">
+    This rule forbids the increment and decrement arithmetic operators. Some people
+    believe the <tt>++</tt> and <tt>--</tt>
+    to be cryptic and the cause of bugs due to misunderstandings of their
+    precedence rules. This rule is disabled by default.
+                  </td>
+                </tr>
+                <tr>
+                  <td class="rule">no_throwing_strings</td>
+                  <td class="description">
+    This rule forbids throwing string literals or interpolations. While JavaScript (and CoffeeScript
+    by extension) allow any expression to be thrown, it is best to only throw <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Error">Error</a>
+    objects, because they contain valuable debugging information like the stack trace.
+    Because of JavaScript's dynamic nature, CoffeeLint cannot ensure you are always
+    throwing instances of <tt>Error</tt>. It will only catch the simple but real
+    case of throwing literal strings.
+<pre><code># CoffeeLint will catch this:
+throw "i made a boo boo"
+
+# ... but not this:
+throw getSomeString()
+</code>
+</pre>
+    This rule is enabled by default.
+                  </td>
+                </tr>
+                <tr>
+                  <td class="rule">no_backticks</td>
+                  <td class="description">
+  Backticks allow snippets of JavaScript to be embedded in CoffeeScript. While some
+  folks consider backticks useful in a few niche circumstances, they should be
+  avoided because so none of JavaScript's "bad parts", like
+  <tt>with</tt> and <tt>eval</tt>, sneak into CoffeeScript. This rule is
+  enabled by default.
+                  </td>
+                </tr>
+                <tr>
+                  <td class="rule">line_endings</td>
+                  <td class="description">
+  This rule ensures your project uses only <tt>windows</tt> or <tt>unix</tt>
+  line endings. This rule is disabled by default.
+                  </td>
+                </tr>
+                <tr>
+                  <td class="rule">no_stand_alone_at</td>
+                  <td class="description">
+  This rule checks that no stand alone @ are in use, they are discouraged.
+  Further information in CoffeScript issue <a href="https://github.com/jashkenas/coffee-script/issues/1601">#1601</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+

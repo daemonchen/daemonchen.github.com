@@ -1,0 +1,136 @@
+﻿<html>
+<head>
+    <title>shuiyin</title>
+</head>
+
+
+<style type="text/css">
+
+body {
+	background:#EEEEEE;
+	text-align:center;
+	font-size:10pt;
+
+}
+div{
+	position:relative;
+}
+  img.img_shuiyin {
+    border:1px solid #CCCCCC;
+	position:absolute;
+	left:0px;
+	top:0px;
+  }
+.shuiyindiv{
+	background:#ccc;
+	box-shadow:#000;
+}
+</style>
+<body>
+<div style="width:800px;margin:0 auto;">
+	<div >
+		<div style="width:310px;height:310px;" class="shuiyin_wrapper">
+				<Img src="resources/images/demo.jpg"  id="img_shuiyin" class='productImage'/>
+		</div>
+		<!-- <div class="watermark" style="width:84px;"> -->
+			<img class="watermark" src="resources/images/3cdf6c874e0040f78eb5564c8e7fb85c.png_300x300.png" width="84"/>
+		<!-- </div> -->
+		<div><span></span></div>
+		<input type="button" class="zoomIn"  style='width:99px;' value='zoomIn'/>
+		<input type="button" class="zoomOut" style='width:99px;' value='zoomOut'/>
+		<input type="button" class="getResults" style='width:99px;' value='results'/>
+
+	</div>
+	</div>
+<script type="text/javascript" src="resources/js/jquery1.6.js"></script>
+    <script type="text/javascript" src="resources/js/jquery.mousewheel.min.js"></script>
+	<script type="text/javascript" src="resources/js/jquery.rotate-0.1.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			var cur_wm = 0;//当前选择水印的标记
+			var cur_wm_obj = null;//当前水印对象
+			var cur_angle = 0;//当前旋转角度;
+			var wmsidrag = 0;
+			var results = {}
+			var maxLeft = $('.productImage').width()
+			var maxTop = $('.productImage').height()
+			console.log('>>>',maxTop)
+			$(".watermark").click(function(){
+				if(cur_wm == 0){
+					$(".shuiyin_wrapper").find(".watermark").remove();
+					cur_wm_obj = $(this).clone().appendTo(".shuiyin_wrapper").css({"position":"absolute","width":"84px","top":"0px","left":"0px"})
+					.mousewheel(function(e,delta){
+					if(delta >= 0){
+						cur_angle += 10;
+					}
+					else{
+						cur_angle -= 10;
+					}
+					var angle = cur_angle;
+
+					// $("span").html(angle);
+					results.angle = angle
+					$(this).jqrotate(angle);
+				})
+				.mousedown(function(e){
+					e.preventDefault();
+					e.stopPropagation();
+					wmsidrag=1;
+
+				})
+				.mouseup(function(e){
+					e.preventDefault();
+					e.stopPropagation();
+					wmsidrag=0;
+
+				});
+
+				$(".shuiyin_wrapper").mousemove(function(e){
+					e.preventDefault();
+					e.stopPropagation();
+					var cur_left=parseInt(e.clientX)-parseInt($(this).offset().left)-parseInt(cur_wm_obj.width())/2;
+					var cur_top=parseInt(e.clientY)-parseInt($(this).offset().top)-parseInt(cur_wm_obj.height())/2;
+						if(wmsidrag==1){
+							if(cur_left < 0 || cur_left > maxLeft - cur_wm_obj.width() || cur_top < 0 || cur_top > maxTop-cur_wm_obj.height()){
+								console.log(cur_top,cur_left,maxLeft - cur_wm_obj.width(),maxTop)
+								return;
+							}
+						cur_wm_obj.css({"left":cur_left,"top":cur_top});
+						results.left = cur_left
+						results.top = cur_top
+					}
+				})
+				.mouseup(function(e){
+					e.preventDefault();
+					e.stopPropagation();
+					wmsidrag=0;
+
+				});
+				$(".zoomIn").click(function(){
+					cur_wm_obj.css({'width':cur_wm_obj.width()+1})
+					results.width = cur_wm_obj.width()
+					results.height = cur_wm_obj.height()
+					//todo sth that resize the water image
+				});
+
+				$(".zoomOut").click(function(){
+					cur_wm_obj.css({'width':cur_wm_obj.width()-1})
+					results.width = cur_wm_obj.width()
+					results.height = cur_wm_obj.height()
+					//todo sth that resize the water image
+				});
+
+
+				$('.getResults').click(function(){
+					$('span').html(JSON.stringify(results))
+					// console.log(results)
+					// $('span').html('dd')
+				})
+				}
+				cur_wm=1;
+			});
+
+		});
+	 </script>
+</body>
+</html>

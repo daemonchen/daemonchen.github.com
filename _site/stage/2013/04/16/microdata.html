@@ -1,0 +1,46 @@
+<h1>关于微数据</h1>
+<h3>16 Apr 2013</h3>
+<p><a href="https://support.google.com/webmasters/bin/answer.py?hl=zh-Hans&answer=176035&topic=1088472&ctx=topic">本文来源</a></p>
+<p>
+html5微数据，是标记内容的一种方式。<br />
+
+对于用户是不可见，主要是方便搜索引擎更准确的识别网站内容。<br />
+
+目前google已经支持<a href="https://support.google.com/webmasters/bin/answer.py?hl=zh-Hans&answer=176035&topic=1088472&ctx=topic">microdata</a>的应用。所以，这也是一种seo的手段。<br />
+
+google会通过分析网页里的microdata来生成网页摘要。<br />
+
+摘要是指每条搜索结果下方显示的几行文字，旨在让用户大体了解网页上的内容，以及与用户的搜索查询有何关联。<br />
+
+添加了microdata后可以通过
+<a href="http://www.google.com/webmasters/tools/richsnippets">结构化数据测试工具</a>来测试<br />
+</p>
+<p>微数据使用 HTML 标记（常为 &lt;span&gt; 或 &lt;div&gt;）中的简单属性为项和属性指定简要的描述性名称。以下示例是一个简短的 HTML 文本块，显示的是 Bob Smith 的基本联系信息。</p>
+<pre>
+  &lt;div&gt; 
+    我的名字是 Bob Smith，但大家叫我 Smithy。我的主页是：
+    &lt;a href="http://www.example.com"&gt;www.example.com&lt;/a&gt;
+    我住在富贵新村（上海市）。我是工程师，目前在财富科技公司上班。
+  &lt;/div&gt;
+</pre>
+<p>
+以下是用微数据标记的同一 HTML 内容。
+</p>
+<pre>
+&lt;div itemscope itemtype="http://data-vocabulary.org/Person"&gt;
+  我的名字是 &lt;span itemprop="name"&gt;Bob Smith&lt;/span&gt;
+  但大家叫我 &lt;span itemprop="nickname"&gt;Smithy&lt;/span&gt;。
+  我的主页是：
+  &lt;a href="http://www.example.com" itemprop="url"&gt;www.example.com&lt;/a&gt;
+  我住在富贵新村（上海市）。我是&lt;span itemprop="title"&gt;工程师&lt;/span&gt;
+  目前在&lt;span itemprop="affiliation"&gt;财富科技公司&lt;/span&gt;上班。
+&lt;/div&gt;
+</pre>
+<p>
+下面对此示例进行了详细说明。
+
+在第一行中，itemscope 表示 div 中的内容是个项。<br />
+itemtype="http://data-vocabulary.org/Person 表示该项是人物。<br />
+人物项的每个属性均使用 itemprop 属性进行标识。<br />
+例如，itemprop="name" 描述人物的姓名。<br />
+</p>

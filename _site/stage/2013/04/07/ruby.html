@@ -1,0 +1,392 @@
+<h1>ruby学习笔记（二）</h1>
+<h3>07 Apr 2013</h3>
+
+<blockquote>
+<h2>
+  <a href= "http://www.iteye.com/topic/55826">20分钟ruby入门</a>
+</h2>
+<h3>
+<a href="http://www.iteye.com/topic/55826">译文转载自iteye</a>
+<br />
+<a href="http://www.matrix.org.cn/resource/article/2007-02-26/ff82b100-c542-11db-9ca0-c55b502ecb5b.html" >原文永久链接地址</a>
+</h3>
+
+<h3>介绍</h3>
+<p>这是一个短小的Ruby入门，完全读完只需20分钟。这里假设读者已经安装了Ruby，如果你没有安装的话，请在阅读文前访问Ruby官方网站进行下载并安装。</p>
+<h3>交互式的Ruby</h3>
+<p>打开IRB（交互式Ruby外壳）：
+        如果你使用Mac OS X，那么请打开终端窗口输入irb；
+        如果你使用Linux，那么请打开shell输入irb；
+        如果你使用windows，那么请在开始菜单中找到Ruby->fxri，并执行它。</p>
+<pre>
+  irb(main):001:0>
+</pre>
+Ok，在打开IRB之后，在其中输入"Hello World"。
+<pre>
+  irb(main):001:0> "hello world"
+  => "hello world"
+</pre>
+Ruby听从你的安排!   
+<p>
+发生了什么？我们刚才编写了世界上最短小的“Hello World”程序吗？这么说不太确切。第二行输出是IRB告诉我们：上一个表达式的评估结果。如果我们希望打印出“Hello World”，那么就还需要一点努力：
+</p>
+<pre>
+irb(main):002:0> puts "hello world"
+hello world
+=> nil
+</pre>
+<p>puts 在Ruby中是一个简单的打印输出命令。后面的“=> nil”表示什么？——那是表达式的结果。Puts总是返回nil，这是Ruby中表示“绝对无值”（absolutely-positively- nothing value）的方式，看上去有些类似Java中的null。</p>
+<p>你的免费计算器在这里！    </p>
+<p>无需做什么，我们就能把IRB作为一个简单的计算器使用：</p>
+<pre>
+irb(main):003:0> 3+2
+=> 5
+</pre>
+<p>下面，让我们尝试计算3的平方：</p>
+<pre>
+irb(main):004:0> 3**2
+=> 9
+</pre>
+<p>在Ruby语言中，**表示幂运算。那么如何计算平方根呢？</p>
+<pre>
+irb(main):005:0> Math.sqrt(9)
+=> 3.0
+</pre>
+<p>Ok，等一下，表达式中的sqrt(9)表示什么？你一定能猜到这是计算9的平方根。而Math表示什么？不要着急，下面就让我们进一步了解像Math这样的模块。</p>
+<h3>模块——按照主题分组的代码</h3>
+<p>
+Math 是Ruby内建的数学模块。在Ruby中，模块提供了两种角色：一种角色是将类似的方法聚集在同一个“家族”名下。因此，Math也包括sin、tan这 样的方法。第二种角色是一个圆点（dot），它标记了消息的接收者。什么是消息？在上面的例子中，sqrt(9)便是消息，它意味着调用sqrt方法取出 9的平方根。
+</p>
+<p>
+Sqrt方法调用的结果是3.0。你可能注意到它并不是3。这是因为多数情况下，数字的平方根并不是整数，所以这里返回了一个浮点数。
+</p>
+<p>
+那么我们如何记住这些计算结果呢？——将结果赋值给变量。
+</p>
+<pre>
+irb(main):006:0> a = 3**2
+=> 9
+irb(main):007:0> b = 4**2
+=> 16
+irb(main):008:0> Math.sqrt(a+b)
+=> 5.0
+</pre>
+<h3>如何定义方法？</h3>
+<p>
+如何才能方便省事地随意输出字符串，而无需过多地劳烦我们的手指呢？——我们需要定义一个方法！
+</p>
+<pre>irb(main):009:0> def h
+irb(main):010:1> puts "hello world"
+irb(main):011:1> end
+</pre>
+<p>
+上面的代码中第一行“def h”标志着方法定义的开始。它告诉Ruby我们正在定义一个名为h的方法。下面一行是方法体：puts "Hello World"。最后，也就是第三行“end”通知Ruby我们完成了方法定义。Ruby的回应“=> nil”告诉我们它已经知道我们定义了此方法。
+</p>
+<h3>简短、重复地调用方法     </h3>
+<p>
+ 现在，让我们尝试多次执行这个方法：
+</p>
+<pre>
+irb(main):012:0> h
+hello world
+=> nil
+irb(main):013:0> h()
+hello world
+=> nil
+</pre>
+<p>
+哈，这太容易了。在Ruby中调用某个方法只需将方法名提交给Ruby。当然，这是在方法没有参数的情况下。如果你愿意也可以添加一个空白的括号，但是这没有必要。
+</p>
+<p>
+如果我们想对某个人说hello而不是整个“世界”（world），那该怎么做？——重定义h方法使它接收name参数。
+</p>
+<pre>
+irb(main):001:0> def h(name)
+irb(main):002:1> puts "hello #{name}"
+irb(main):003:1> end
+=> nil
+irb(main):004:0> h("daemon")
+hello daemon
+=> nil
+irb(main):005:0>
+</pre>
+<p>
+ 嗯，现在看来工作正常。
+</p>
+<h3>字符串中的奥秘</h3>
+<p>
+	“#{name}”是什么意思？这是Ruby在某个字符串中插入其它字符的方式。在大括号之间放入的字符串（这里是指name）将被外部的字符串代替。你也可以使用字符串类内建的capitalize方法来确保某人名字的首字母大写：
+</p>
+<pre>
+irb(main):005:0> def h(name = "world")
+irb(main):006:1> puts "hello #{name.capitalize}"
+irb(main):007:1> end
+=> nil
+irb(main):008:0> h "daemon"
+hello Daemon
+=> nil
+irb(main):009:0> h
+hello World
+=> nil
+irb(main):010:0>
+</pre>
+<p>
+上面的代码有两个地方需要说明：<br />
+第一，我们通过无括号的方式调用方法，因为括号是可选的；<br />
+第二，这里的默认参数值为“World”。也就是说在调用方法时如果没有提供name参数，则使用默认值“World”。<br />
+</p>
+<h3>进化为Greeter！</h3>
+<p>
+我们是否需要一个真正的问候者（greeter），他能记住你的名字、问候你、总是尊重地向你示好？那么这就最好建立一个“Greeter”类：
+</p>
+<pre>
+irb(main):027:0* class Greeter
+irb(main):028:1>   def initialize(name = "world")
+irb(main):029:2>     @name = name
+irb(main):030:2>   end
+irb(main):031:1>   def say_hi
+irb(main):032:2>     puts "hi #{@name}"
+irb(main):033:2>   end
+irb(main):034:1>   def say_bye
+irb(main):035:2>     puts "bye #{@name}"
+irb(main):036:2>   end
+irb(main):037:1> end
+=> nil
+</pre>
+<p>
+在上面的类代码中定义了一个称为Greeter的类和一些类方法，其中出现了一些新的“关键词”:请注意“@name”，它是类的实例变量，并对类中的所有方法（say_hi和say_bye方法）都有效。
+</p>
+<p>
+ 如何让Greeter类发挥作用？现在让我们来建立一个Greeter对象并使用它！
+</p>
+<pre>
+irb(main):038:0> g = Greeter.new("daemon")
+=> #<Greeter:0x1fa8860 @name="daemon">
+irb(main):039:0> g.say_hi
+hi daemon
+=> nil
+irb(main):040:0> g.say_bye
+bye daemon
+=> nil
+</pre>
+<p>Greeter类的实例对象g被建立后，它便接受了name参数（值为Pat）。那么我们能直接访问name吗？</p>
+<pre>
+irb(main):041:0> g.@name
+SyntaxError: (irb):41: syntax error, unexpected tIVAR
+        from C:/Ruby193/bin/irb:12:in `<main>'
+</pre>
+<p> 看看上面的编译错误来看，这样直接访问name是行不通的。</p>
+<h3>窥视对象的内部  </h3>
+<p>对象中的实例变量总是隐藏于其中，但也并非毫无踪迹可寻，通过审查（inspect）对象便会见到它们。当然还有其它的访问方法，但是Ruby采用了良好的面向对象的方式来保持数据的隐藏性。</p>
+<pre>
+irb(main):047:0* Greeter.instance_methods
+=> [:say_hi, :say_bye, :h, :nil?, :===, :=~, :!~, :eql?, :hash, :<=>, :class, :singleton_class, :clone, :dup, :initialize_dup, :initialize_clone, :taint, :tainted?, :untaint, :untrust, :untrusted?, :trust, :freeze, :frozen?, :to_s, :inspect, :methods, :singleton_methods, :protected_methods, :private_methods, :public_methods, :instance_variables, :instance_variable_get, :instance_variable_set, :instance_variable_defined?, :instance_of?, :kind_of?, :is_a?, :tap, :send, :public_send, :respond_to?, :respond_to_missing?, :extend, :display, :method, :public_method, :define_singleton_method, :object_id, :to_enum, :enum_for, :==, :equal?, :!, :!=, :instance_eval, :instance_exec, :__send__, :__id__]
+irb(main):048:0>
+</pre>
+<p>
+喔！这么多方法，可是我们只定义了两个方法呀？其它的方法又出自何处？不要担心，instance_methods方法列出了Greeter对象的所有方 法，其中包括父类中定义的方法。如果我们只想对Greeter类的方法进行列表的话，那么把false作为参数调用instance_methods方法 即可。false意味着我们不需要父类定义的方法。
+</p>
+<pre>
+irb(main):054:0* Greeter.instance_methods(false)
+=> [:say_hi, :say_bye]
+irb(main):055:0>
+</pre>
+<p>哈哈，这才是我们想要的。下面让我们看看Greeter对象能回应哪些方法：</p>
+<pre>
+irb(main):055:0> g.respond_to?("name")
+=> false
+irb(main):056:0> g.respond_to?("say_hi")
+=> true
+irb(main):057:0> g.respond_to?("to_s")
+=> true
+irb(main):058:0>
+</pre>
+<p> 它知道say_hi、to_s（此方法将对象转换为字符串，是任何对象都必备的默认方法，很想Java中的toString方法），但它不知道name。</p>
+<h3>随时修改类定义 </h3>
+<p> 如何才能查看或者修改name呢？Ruby提供了访问对象变量的简单方法：
+</p>
+<pre>
+irb(main):061:0* class Greeter
+irb(main):062:1>   attr_accessor :name
+irb(main):063:1> end
+=> nil
+irb(main):064:0>
+</pre>
+<p>在Ruby语言中，你能够多次打开某个类并修改它。而修改所带来的变化将应用在此后建立的任何新对象中、甚至现存的此类对象中。下面让我们建立一个新对象并访问它的@name属性。
+</p>
+<pre>
+irb(main):064:0> g = Greeter.new("andy")
+=> #<Greeter:0x2112678 @name="andy">
+irb(main):065:0> g.respond_to?("name")
+=> true
+irb(main):066:0> g.respond_to?("name=")
+=> true
+irb(main):067:0> g.say_hi
+hi andy
+=> nil
+irb(main):068:0> g.name = "betty"
+=> "betty"
+irb(main):069:0> g
+=> #<Greeter:0x2112678 @name="betty">
+irb(main):070:0> g.name
+=> "betty"
+irb(main):071:0> g.say_hi
+hi betty
+=> nil
+</pre>
+<p>
+我们通过使用attr_accessor定义了两个方法：
+        “.name”用来获取name属性值；
+        “.name=”用来设置namee属性值。
+        这很类似在Java类中访问被Public修饰的成员变量。
+</p>
+<h3>
+向每个人问候，MegaGreeter不会漏掉一个人   
+</h3>
+<p>
+Greeter并不完美，因为它只能一次服务一个人。所以我们在这里设计一个能够一次向全世界、世界上每个人或者在名单中的人发送问候的MegaGreeter类。在这里，我们将放弃从前的IRB交互模式，转而改为编写Ruby程序文件。
+
+        退出IRB的方法：输入“quit”、“exit”或者按下Control+D的组合键。
+</p>
+<pre>
+class MegaGreeter
+	attr_accessor :names
+	def initialize(names = "World")
+		@names = names
+	end
+
+	def say_hi
+		if @names.nil?
+			puts "..."
+		elsif @names.respond_to?("each")
+			@names.each do |name|
+				puts "Hello #{name}"
+			end
+		else
+			puts "Hello #{@names}"
+		end
+	end
+
+	def say_bye
+    if @names.nil?
+      puts "..."
+    elsif @names.respond_to?("join")
+      # Join the list elements with commas
+      puts "Goodbye #{@names.join(", ")}.  Come back soon!"
+    else
+      puts "Goodbye #{@names}.  Come back soon!"
+    end
+  end
+
+end
+
+if __FILE__ == $0
+	puts File.dirname(__FILE__)
+	puts $0
+  mg = MegaGreeter.new
+  mg.say_hi
+  mg.say_bye
+
+  # Change name to be "Zeke"
+  mg.names = "Zeke"
+  mg.say_hi
+  mg.say_bye
+
+  # Change the name to an array of names
+  mg.names = ["Albert", "Brenda", "Charles",
+    "Dave", "Englebert"]
+  mg.say_hi
+  mg.say_bye
+
+  # Change to nil
+  mg.names = nil
+  mg.say_hi
+  mg.say_bye
+end
+</pre>
+<p>保存上面的代码到名为“ri20min.rb”的文件中，并使用“ruby ri20min.rb”的命令执行它。程序输出如下：</p>
+<pre>
+E:\rubyTest>ruby MegaGreeter.rb
+.
+MegaGreeter.rb
+Hello World
+Goodbye World.  Come back soon!
+Hello Zeke
+Goodbye Zeke.  Come back soon!
+Hello Albert
+Hello Brenda
+Hello Charles
+Hello Dave
+Hello Englebert
+Goodbye Albert, Brenda, Charles, Dave, Englebert.  Come back soon!
+...
+...
+
+E:\rubyTest>
+</pre>
+<p>下面我们将深入了解一下上面的代码。</p>
+<p>请注意上面代码中的起始行，它以#开头。在Ruby语言中，任何以#开头的行都被视为注释，并被解释程序忽略。</p>
+<p> 我们的say_hi方法已经发生了变化：</p>
+<pre>
+def say_hi
+  if @names.nil?
+    puts "..."
+  elsif @names.respond_to?("each")
+    @names.each do |name|
+      puts "Hello #{name}"
+    end
+  else
+    puts "Hello #{@names}"
+  end
+end
+</pre>
+<p>
+它查找@names参数并按照其参数值作出决定：
+        如果参数值为nil，它将打印三个圆点。
+        那么@names.respond_to?("each")表示什么？
+</p>
+<h3>循环——也叫迭代</h3>
+<p>
+ 如果@names对象具有each方法，那么它是可以被迭代的，进而可以对其进行迭代，从而问候列表中每个人。如果@names不具备each方法，则将它自动转换为字符串，并执行默认的问候。
+</p>
+<p>
+each 是一种方法，它接受一个代码块（block of code），然后针对列表中的每个成员执行这个代码块，而在do和end之间的部分便是这个非常类似匿名函数的代码块。在管道符之间的变量是代码块的参数 name，它作为代码块参数被绑定为列表成员，而代码块puts "Hello #{name}!"将使用这个参数进行输出。
+</p>
+<p>
+大多数其它的编程语言使用循环遍历列表，下面是C语言的循环示例：
+</p>
+<pre>
+for (i=0; i < number_of_elements; i++)
+  {
+    do_something_with(elements[i])
+  }
+</pre>
+<p>
+上面的代码显然可以工作，但它不够“优雅”！你不得不用i这个多余的循环变量，还需要指出列表的长度，然后再解释如何遍历列表。
+</p>
+<p>
+Ruby的迭代方式则更加优雅，所有的内部管理细节都隐藏在each方法中，你所需做的就是告诉它如何处理其中的每个成员。
+</p>
+<h3>
+块，Ruby边缘的高亮点！
+</h3>
+<p>
+块(block)的真正优势在于：能够处理比列表更加复杂的对象。除了在方法中可以处理简单的内部管理细节外，你还能处理setup、teardown和所有错误，而不让用户有所察觉。
+</p>
+<p>
+say_bye方法没有使用each，而是检查@names是否具有join方法，如果具有join方法，则调用join方法。否则它将直接打印@names变量。
+</p>
+<p>
+此方法并不关心变量的实际类型，这依赖于它所支持的那些被称为“Duck Typing” 的方法：duck typing是动态类型的一种形式：变量的值自身隐含地决定了了变量的行为。这暗示了某个对象与其它实现了相同接口的对象之间是可交换的，不管对象之间是 否具有继承关系。鸭子测试（duck test）是对duck typing的一种形象比喻——“如果它走路像鸭子，那么也一定像鸭子一样呷呷地叫，那么它必定是一只鸭子”。duck typing是某些编程语言的特性：如Smalltalk, Python, Ruby, ColdFusion。
+</p>
+<p>
+Duck Typing的益处是无需对变量的类型进行严格地限制，如果某人使用一种新类型的列表类，只要它实现了与其它列表相同语义的join方法，便可以拿来使用。
+</p>
+<h3>
+启动脚本
+</h3>
+<p>
+文件上半部分是MegaGreeter类的代码，而后面剩下的部分则是对这些类方法的调用。而这是我们最后值得注意的一点：
+</p>
+<p>__FILE__ 是一个“具有魔力”的变量，它代表了当前文件名。$0是用于启动程序的文件名。那么代码“if __FILE__ == $0”便意味着检查此文件是否为将被使用的主程序文件。这样做可以使程序文件作为代码库使用，而不是可执行代码；但当此文件被用作执行文件时，也可被执 行。</p>
+</blockquote>

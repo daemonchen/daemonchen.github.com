@@ -1,0 +1,406 @@
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu_union_verify" content="4c2699c961836335046b34d583e2f1e8">
+  <meta name="baidu-site-verification" content="W5ActQDR7D07HRCs" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <link href="/stylesheets/bootstrap.css" rel="stylesheet">
+  <style type="text/css">
+    body {
+      padding-top: 80px;
+      padding-bottom: 40px;
+    }
+  </style>
+  <link href="/stylesheets/bootstrap-responsive.css" rel="stylesheet">
+
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+    <script src="../assets/js/html5shiv.js"></script>
+  <![endif]-->
+
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-114.png" />
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-144.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144.png" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <title>Classical1988</title>
+  <meta name="description" content="my blog">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <base target=_blank>
+</head>
+
+<body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active">
+                  <a href="/"><h1>Home</h1></a>
+              </li>
+              <li>
+                <a href="#"><h3>About</h3></a>
+              </li>
+              <li>
+                <a href="https://github.com/daemonchen/daemonchen.github.com">
+                  <h3>Contact</h3></a>
+              </li>  
+            </ul>
+            
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">      
+      <div class="row">
+        <div class="span9">
+          <h1>Use Coffeelint To Make Your Coffee Code Is Lint Free</h1>
+<h3>26 Apr 2013</h3>
+<h3>概述</h3>
+<span class='muted'>本文翻译自
+  <a href="http://www.coffeelint.org/">CoffeeLint</a>
+</span>
+<p>CoffeeLint可以用来检查代码格式以保证你的<a href="http://coffeescript.org/">CoffeeScript</a> 代码是干净并且风格一致的。CoffeeScript可以帮助我们更友好的写javascript从而远离那些糟糕的部分，但是它不能帮助我们保持代码风格的一致性，而CoffeeLint可以帮助我们。
+</br>
+CoffeeLint还刚刚起步，感谢所有的反馈。如果你有什么想法，想要提交错误报告或者任何其他想要告诉我们的，请到<a href="https://github.com/clutchski/coffeelint/issues">issue page</a>
+</p>
+<h3>安装</h3>
+<p>在安装有<a href="http://nodejs.org/">node</a>和<a href="http://npmjs.org/">npm</a>的环境下运行如下命令:</p>
+<pre>npm install -g coffeelint</pre>
+<p>如果不想在全局安装，就去掉-g参数</p>
+<h3>用法</h3>
+<p>安装完以后，可以用如下命令来lint你的代码:</p>
+<pre>coffeelint application.coffee</pre>
+<p>可以使用自定义的配置来lint代码:</p>
+<pre>coffeelint -f config.json application.coffee</pre>
+<p>也可以lint目录下所有文件:</p>
+<pre>coffeelint -f coffeelint-config.json -r YtxMobile\app</pre>
+<p>如果有错误，会返回非零的代码提示</p>
+<pre> Lint! » 16 errors and 101 warnings in 127 files</pre>
+<p>自定义配置文件的命令如下:</p>
+<pre>coffeelint --makeconfig > config.json</pre>
+<h3>命令参数</h3>
+<pre>
+Options:
+  -f, --file     Specify a custom configuration file.
+  --noconfig     Ignores the environment variable COFFEELINT_CONFIG.  [boolean]
+  -h, --help     Print help information.
+  -v, --version  Print current version number.
+  -r             Recursively lint .coffee files in subdirectories.    [boolean]
+  --csv          Use the csv reporter.                                [boolean]
+  --jslint       Use the JSLint XML reporter.                         [boolean]
+  --nocolor      Don't colorize the output                            [boolean]
+  -s, --stdin    Lint the source from stdin                           [boolean]
+  -q, --quiet    Only print errors.                                   [boolean]
+</pre>
+<h3>配置参数</h3>
+<p>默认情况下，CoffeeLint会按照默认情况来lint代码，但是所有规则都是可选并且可以配置的。 可以根据需要重写CoffeeLint的默认选项，生成配置文件，比如激活一个选项，设置它的级别为错误，或者禁用一个选项，设置它的级别为可忽略的。如果你设置级别为警告，会有警告报告，但是不会有非零的退出代码，就是说，不要紧，继续吧。。。</p>
+<table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="rule">indentation</td>
+              <td class="description">
+    This rule imposes a standard number of spaces to be used for indentation.
+    Since whitespace is significant in CoffeeScript, it's critical that a project
+    chooses a standard indentation format and stays consistent. Other roads lead
+    to darkness.
+<pre><code># Enabling this option will prevent this ugly
+# but otherwise valid CoffeeScript.
+twoSpaces = () -&gt;
+  fourSpaces = () -&gt;
+      eightSpaces = () -&gt;
+            'this is valid CoffeeScript'
+
+</code>
+</pre>
+    Two space indentation is enabled by default.
+                   </td>
+               </tr>
+               <tr>
+                 <td class="rule">max_line_length</td>
+                 <td class="description">
+    This rule imposes a maximum line length on your code. <a href="http://www.python.org/dev/peps/pep-0008/">Python's style guide</a> does a good job explaining why you might want to limit the length of your lines, though this is a matter of taste.
+
+    Lines can be no longer than eighty characters by default.
+                  </td>
+                </tr>
+                <tr>
+                  <td class="rule">camel_case_classes</td>
+                  <td class="description">
+    This rule mandates that all class names are camel cased. Camel casing class names
+    is a generally accepted way of distinguishing constructor functions - which require the 'new'
+    prefix to behave properly - from plain old functions.
+<pre><code># Good!
+class BoaConstrictor
+
+# Bad!
+class boaConstrictor
+</code>
+</pre>
+    This rule is enabled by default.
+                  </td>
+                </tr>
+                <tr>
+                  <td class="rule">no_trailing_semicolons</td>
+                  <td class="description">
+    This rule prohibits trailing semicolons, since they are needless cruft in CoffeeScript.
+<pre><code># This semicolon is meaningful.
+x = '1234'; console.log(x)
+
+# This semicolon is redundant.
+alert('end of line');
+</code>
+</pre>
+    Trailing semicolons are forbidden by default.
+                  </td>
+                </tr>
+                <tr>
+                  <td class="rule">no_implicit_braces</td>
+                  <td class="description">
+    This rule prohibits implicit braces when declaring object literals. Implicit braces
+    can make code more difficult to understand, especially when used in combination with
+    optional parenthesis.
+<pre><code># Do you find this code ambiguous? Is it a
+# function call with three arguments or four?
+myFunction a, b, 1:2, 3:4
+
+# While the same code written in a more
+# explicit manner has no ambiguity.
+myFunction(a, b, {1:2, 3:4})
+</code>
+</pre>
+    Implicit braces are permitted by default, since their use is idiomatic
+    CoffeeScript.
+                  </td>
+                </tr>
+                <tr>
+                  <td class="rule">no_implicit_parens</td>
+                  <td class="description">
+    This rule prohibits implicit parens on function calls.
+<pre><code># Some folks don't like this style of coding.
+myFunction a, b, c
+
+# And would rather it always be written like this:
+myFunction(a, b, c)
+</code>
+</pre>
+    Implicit parens are permitted by default, since their use is idiomatic
+    CoffeeScript.
+                  </td>
+                </tr>
+                <tr>
+                  <td class="rule">no_empty_param_list</td>
+                  <td class="description">
+    This rule prohibits empty parameter lists in function definitions.
+<pre><code># The empty parameter list in here is unnecessary:
+myFunction = () -&gt;
+
+# We might favor this instead:
+myFunction = -&gt;
+</code>
+</pre>
+    Empty parameter lists are permitted by default.
+                  </td>
+                </tr>
+                <tr>
+                  <td class="rule">no_tabs</td>
+                  <td class="description">
+  This rule forbids tabs in indentation. Enough said. It is enabled by default.
+                </td></tr>
+                <tr>
+                  <td class="rule">no_trailing_whitespace</td>
+                  <td class="description">
+    This rule forbids trailing whitespace in your code, since it is needless cruft. It is enabled by default.
+                  </td>
+                </tr>
+                <tr>
+                  <td class="rule">no_plusplus</td>
+                  <td class="description">
+    This rule forbids the increment and decrement arithmetic operators. Some people
+    believe the <tt>++</tt> and <tt>--</tt>
+    to be cryptic and the cause of bugs due to misunderstandings of their
+    precedence rules. This rule is disabled by default.
+                  </td>
+                </tr>
+                <tr>
+                  <td class="rule">no_throwing_strings</td>
+                  <td class="description">
+    This rule forbids throwing string literals or interpolations. While JavaScript (and CoffeeScript
+    by extension) allow any expression to be thrown, it is best to only throw <a href="https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Error">Error</a>
+    objects, because they contain valuable debugging information like the stack trace.
+    Because of JavaScript's dynamic nature, CoffeeLint cannot ensure you are always
+    throwing instances of <tt>Error</tt>. It will only catch the simple but real
+    case of throwing literal strings.
+<pre><code># CoffeeLint will catch this:
+throw "i made a boo boo"
+
+# ... but not this:
+throw getSomeString()
+</code>
+</pre>
+    This rule is enabled by default.
+                  </td>
+                </tr>
+                <tr>
+                  <td class="rule">no_backticks</td>
+                  <td class="description">
+  Backticks allow snippets of JavaScript to be embedded in CoffeeScript. While some
+  folks consider backticks useful in a few niche circumstances, they should be
+  avoided because so none of JavaScript's "bad parts", like
+  <tt>with</tt> and <tt>eval</tt>, sneak into CoffeeScript. This rule is
+  enabled by default.
+                  </td>
+                </tr>
+                <tr>
+                  <td class="rule">line_endings</td>
+                  <td class="description">
+  This rule ensures your project uses only <tt>windows</tt> or <tt>unix</tt>
+  line endings. This rule is disabled by default.
+                  </td>
+                </tr>
+                <tr>
+                  <td class="rule">no_stand_alone_at</td>
+                  <td class="description">
+  This rule checks that no stand alone @ are in use, they are discouraged.
+  Further information in CoffeScript issue <a href="https://github.com/jashkenas/coffee-script/issues/1601">#1601</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+
+          <div id="disqus_thread"></div>
+        </div>
+        <div class="span3">
+          <div class="sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header"><h1>docs</h1></li>
+              <li>
+                <a href="http://twitter.github.io/bootstrap/"><h3>Bootstrap</h3></a>
+              </li>
+              <li>
+                <a href="http://pages.github.com/">
+                  <h3>github pages</h3>
+                </a>
+              </li>
+              <li>
+                <a href="http://coffeescript.org/">
+                  <h3>coffee-script</h3>
+                </a>
+              </li>
+              <li>
+                <a href="http://nodejs.org/">
+                  <h3>node.js</h3>
+                </a>
+              </li>
+              <li>
+                <a href="http://docs.appcelerator.com/titanium/latest/">
+                  <h3>Titanium</h3>
+                </a>
+              </li>
+              <li>
+                <a href="http://www.ruby-lang.org/zh_cn/">
+                  <h3>Ruby</h3>
+                </a>
+              </li>
+              <li>
+                <a href="http://www.w3cfuns.com/">
+                  <h3>w3cfuns</h3>
+                </a>
+              </li>
+              <li class="nav-header">
+                <h1>圈子</h1>
+              </li>
+              <li>
+                <a href="http://hidali.com/">
+                  <h3>大力总监</h3>
+                </a>
+              </li>
+              <li>
+                <a href="http://btang.cn/">
+                  <h3>原木游戏</h3>
+                </a>
+              </li>
+              <li>
+                <a href="http://www.w3cdream.com/">
+                  <h3>w3cdream</h3>
+                </a>
+              </li>
+              <li>
+                <a href="http://www.jqshare.com/">
+                  <h3>jquery特效</h3>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <hr>
+
+      <footer class="navbar">
+        <ul class="nav">
+          <li>
+              <a style="padding:0; border:2px solid #555;" href="https://github.com/daemonchen" class=""><img src="https://secure.gravatar.com/avatar/b296cd51fec6c36a6cd0d590ba3446ac?s=30&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="48" height="48"/></a>
+          </li>
+          <li>
+            <a href="https://github.com/daemonchen">快乐前行 低迷折回</a>
+          </li>
+        </ul>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+  <!--
+    <script src="/javascripts/bootstrap-transition.js"></script>
+    <script src="/javascripts/bootstrap-alert.js"></script>
+    <script src="/javascripts/bootstrap-modal.js"></script>
+    
+    <script src="/javascripts/bootstrap-scrollspy.js"></script>
+    <script src="/javascripts/bootstrap-tab.js"></script>
+    <script src="/javascripts/bootstrap-tooltip.js"></script>
+    <script src="/javascripts/bootstrap-popover.js"></script>
+    <script src="/javascripts/bootstrap-button.js"></script>
+    
+    <script src="/javascripts/bootstrap-carousel.js"></script>
+    <script src="/javascripts/bootstrap-typeahead.js"></script>
+  
+    
+  -->
+    <script src="/javascripts/bootstrap-dropdown.js"></script>
+    <script src="/javascripts/bootstrap-collapse.js"></script>
+    
+    <script src="/javascripts/googletrackingcode.js"></script>
+    <script src="/javascripts/disqus_thread.js"></script> 
+
+    <!-- JiaThis Button BEGIN -->
+    <script type="text/javascript">
+    var jiathis_config = {data_track_clickback:'true'};
+    </script>
+    <script type="text/javascript" src="http://v3.jiathis.com/code/jiathis_r.js?move=0&amp;uid=1347323726704264" charset="utf-8"></script>
+    <!-- JiaThis Button END -->
+  </body>
+</html>

@@ -1,0 +1,221 @@
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="baidu_union_verify" content="4c2699c961836335046b34d583e2f1e8">
+  <meta name="baidu-site-verification" content="W5ActQDR7D07HRCs" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <link href="/stylesheets/bootstrap.css" rel="stylesheet">
+  <style type="text/css">
+    body {
+      padding-top: 80px;
+      padding-bottom: 40px;
+    }
+  </style>
+  <link href="/stylesheets/bootstrap-responsive.css" rel="stylesheet">
+
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+    <script src="../assets/js/html5shiv.js"></script>
+  <![endif]-->
+
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-114.png" />
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-144.png" />
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144.png" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <title>Classical1988</title>
+  <meta name="description" content="my blog">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <base target=_blank>
+</head>
+
+<body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active">
+                  <a href="/"><h1>Home</h1></a>
+              </li>
+              <li>
+                <a href="#"><h3>About</h3></a>
+              </li>
+              <li>
+                <a href="https://github.com/daemonchen/daemonchen.github.com">
+                  <h3>Contact</h3></a>
+              </li>  
+            </ul>
+            
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">      
+      <div class="row">
+        <div class="span9">
+          <h1>细数coffee中那些可口的语法糖</h1>
+<h3>20 Mar 2013</h3>
+
+	<p>最近用coffee来做项目，使用第一天，就爱上了这种优雅的编程风格。</p>
+
+	<p>来总结一下在项目中使用过的语法糖。</p>
+<p>
+	1、在coffee中，默认的每个coffee文件编译后，其代码都是在一个闭包内的（当然了，编译的时候，可通过bare参数设置是否要将代码编译在闭包内）。这样，就再不用担心定义了一个全局变量，而名字重复的问题了。如果确实想要将一个变量或者函数暴露到全局，只要将变量或者函数绑定到this对象就OK了。因为coffee编译后，会将this对象传到闭包内。
+</p>
+
+<p>2、在coffee中，取消了大部分的括号，代之以有意义的空格。这是我相当喜欢的一个地方。我最讨厌为了打括号，要同时按住shift和括号两个键。</p>
+
+<p>3、在coffee中，取消了function关键字，简单，我喜欢。</p>
+
+<p>4、在coffee中，取消了方法中的大括号和分号。简单，我喜欢。</p>
+
+<p>5、在coffee中，加入了字符串插值概念，大大方便了我们在字符串中拼接变量的工作。
+
+      在coffee中，双引号，表示插值字符串，单引号表示文本字符串。</p>.
+<p>6、coffee中的heredoc
+
+在coffee中构建多行的字符串，并保留字符串中的换行和空格。
+
+heredoc也分为插值heredoc和文本heredoc，规则同普通插值字符串和文本字符串。</p>
+<p>7、coffee中，给参数赋予默认值，也是非常方便的</p>.
+<p>8、splat参数
+
+coffee中，允许在参数中传入一个splat操作符来表示这里会传入不定个数的参数。
+
+并且，这个splat操作符在参数列表中的位置不固定，不过参数列表中只能出现一个splat操作符。</p>
+<p>9、命名参数
+coffee里可以使用命名参数</p>
+
+<h3>未完待续...</h3>
+
+
+          <div id="disqus_thread"></div>
+        </div>
+        <div class="span3">
+          <div class="sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header"><h1>docs</h1></li>
+              <li>
+                <a href="http://twitter.github.io/bootstrap/"><h3>Bootstrap</h3></a>
+              </li>
+              <li>
+                <a href="http://pages.github.com/">
+                  <h3>github pages</h3>
+                </a>
+              </li>
+              <li>
+                <a href="http://coffeescript.org/">
+                  <h3>coffee-script</h3>
+                </a>
+              </li>
+              <li>
+                <a href="http://nodejs.org/">
+                  <h3>node.js</h3>
+                </a>
+              </li>
+              <li>
+                <a href="http://docs.appcelerator.com/titanium/latest/">
+                  <h3>Titanium</h3>
+                </a>
+              </li>
+              <li>
+                <a href="http://www.ruby-lang.org/zh_cn/">
+                  <h3>Ruby</h3>
+                </a>
+              </li>
+              <li>
+                <a href="http://www.w3cfuns.com/">
+                  <h3>w3cfuns</h3>
+                </a>
+              </li>
+              <li class="nav-header">
+                <h1>圈子</h1>
+              </li>
+              <li>
+                <a href="http://hidali.com/">
+                  <h3>大力总监</h3>
+                </a>
+              </li>
+              <li>
+                <a href="http://btang.cn/">
+                  <h3>原木游戏</h3>
+                </a>
+              </li>
+              <li>
+                <a href="http://www.w3cdream.com/">
+                  <h3>w3cdream</h3>
+                </a>
+              </li>
+              <li>
+                <a href="http://www.jqshare.com/">
+                  <h3>jquery特效</h3>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <hr>
+
+      <footer class="navbar">
+        <ul class="nav">
+          <li>
+              <a style="padding:0; border:2px solid #555;" href="https://github.com/daemonchen" class=""><img src="https://secure.gravatar.com/avatar/b296cd51fec6c36a6cd0d590ba3446ac?s=30&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="48" height="48"/></a>
+          </li>
+          <li>
+            <a href="https://github.com/daemonchen">快乐前行 低迷折回</a>
+          </li>
+        </ul>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+  <!--
+    <script src="/javascripts/bootstrap-transition.js"></script>
+    <script src="/javascripts/bootstrap-alert.js"></script>
+    <script src="/javascripts/bootstrap-modal.js"></script>
+    
+    <script src="/javascripts/bootstrap-scrollspy.js"></script>
+    <script src="/javascripts/bootstrap-tab.js"></script>
+    <script src="/javascripts/bootstrap-tooltip.js"></script>
+    <script src="/javascripts/bootstrap-popover.js"></script>
+    <script src="/javascripts/bootstrap-button.js"></script>
+    
+    <script src="/javascripts/bootstrap-carousel.js"></script>
+    <script src="/javascripts/bootstrap-typeahead.js"></script>
+  
+    
+  -->
+    <script src="/javascripts/bootstrap-dropdown.js"></script>
+    <script src="/javascripts/bootstrap-collapse.js"></script>
+    
+    <script src="/javascripts/googletrackingcode.js"></script>
+    <script src="/javascripts/disqus_thread.js"></script> 
+
+    <!-- JiaThis Button BEGIN -->
+    <script type="text/javascript">
+    var jiathis_config = {data_track_clickback:'true'};
+    </script>
+    <script type="text/javascript" src="http://v3.jiathis.com/code/jiathis_r.js?move=0&amp;uid=1347323726704264" charset="utf-8"></script>
+    <!-- JiaThis Button END -->
+  </body>
+</html>
